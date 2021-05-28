@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (Favorite, Ingredient, QuantityIngredient, Recipe,
-                     ShoppingList, Tag)
+                     ShoppingList)
 
 
 @admin.register(Favorite)
@@ -39,10 +39,4 @@ class ShoppingListAdmin(admin.ModelAdmin):
 class QuantityIngredientAdmin(admin.ModelAdmin):
     list_display = ('ingredient', 'quantity')
     list_filter = ('ingredient', )
-    empty_value_display = '-пусто-'
-
-
-@admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
-    list_display = ('title',)
     empty_value_display = '-пусто-'

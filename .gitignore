@@ -130,5 +130,4 @@ dmypy.json
 
 .vscode/
 .vscode/*
-fixtures_last.json
 media/
