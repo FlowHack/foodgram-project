@@ -1,10 +1,10 @@
-from django.shortcuts import render
-from Recipes.views import functions
-from Recipes.models import ShoppingList
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
-from Recipes import settings as recipes_settings
+from django.shortcuts import render
 
+from Recipes import settings as recipes_settings
+from Recipes.models import ShoppingList
+from Recipes.views import functions
 
 User = get_user_model()
 

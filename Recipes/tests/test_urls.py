@@ -1,5 +1,6 @@
-from Recipes.tests.test_settings import AllSettings
 from django.urls import reverse
+
+from Recipes.tests.test_settings import AllSettings
 
 
 class Addition(AllSettings):
