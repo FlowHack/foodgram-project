@@ -1,6 +1,6 @@
 from django.urls import path
 
-import Recipes.views as views
+from Recipes import views
 
 app_name = 'recipes'
 
