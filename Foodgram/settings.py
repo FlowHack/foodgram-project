@@ -6,7 +6,7 @@ load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY') or os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY') or '(r7-&iv&z89%p$1z&-%r4g36f(_@if2i&jf$ek(8_=7wb%dsb4'
 
 DEBUG = True
 
