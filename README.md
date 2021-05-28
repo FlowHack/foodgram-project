@@ -1,3 +1,3 @@
 # Foodgram
 
-![example workflow](https://github.com/FlowHack/foodgram-project/actions/workflows/foodgram.yaml/badge.svg)
+![example workflow](https://github.com/FlowHack/foodgram-project/actions/workflows/foodgram.yml/badge.svg)
