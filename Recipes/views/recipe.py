@@ -12,9 +12,8 @@ User = get_user_model()
 def index(request):
     data_get = request.GET
     recipes = functions.get_recipes_by_tags(data_get)
-    count_purchases = (
-        0, ShoppingList.objects.filter(user=request.user).count()
-    )[request.user.is_authenticated]
+    count_purchases = ShoppingList.objects.filter(user=request.user).count() \
+        if request.user.is_authenticated else 0
 
     paginator = Paginator(
         recipes, recipes_settings.ITEM_RECIPES_INDEX
