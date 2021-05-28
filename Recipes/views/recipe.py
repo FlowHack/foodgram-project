@@ -12,7 +12,7 @@ User = get_user_model()
 def index(request):
     data_get = request.GET
     recipes = functions.get_recipes_by_tags(data_get)
-    count_purchases = ShoppingList.objects.filter(user=request.user).count() \
+    count_purchases = ShoppingList.objects.filter(user=request.user).count()  \
         if request.user.is_authenticated else 0
 
     paginator = Paginator(
