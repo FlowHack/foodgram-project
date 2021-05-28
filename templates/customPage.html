@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock title %}
+{% block css %}<link rel="stylesheet" href="{% static "pages/index.css" %}">{% endblock css %}
+
+{% block content %}
+<div class="custom-center-block">
+  <h2 class="custom-text-block" align="center">{{ message| safe }}</h2>
+  <div class="custom-button-block">
+    <button class="button button_style_blue" style="margin: auto; display: block;">Перейти на главную</button>
+  </div>
+</div>
+{% endblock content %}

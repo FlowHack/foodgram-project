@@ -1,0 +1,33 @@
+<nav class="pagination" aria-label="Search results pages">
+  <ul class="pagination__container">
+    <li class="pagination__item">
+      {% if items.has_previous %}
+        <a class="pagination__link cursor_a link" OnClick="paginate('{{ items.previous_page_number }}');"><span class="icon-left"></span></a>
+      {% else %}
+        <a class="pagination__link link"><span class="icon-left"></span></a>
+      {% endif %}
+    </li>
+    {% for i in paginator.page_range %}
+      {% if items.number == i %}
+        <li class="pagination__item pagination__item_active"><a class="pagination__link link">{{ i }}</a></li>
+      {% else %}
+        <li class="pagination__item"><a class="pagination__link cursor_a link" OnClick="paginate('{{ i }}');">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    <li class="pagination__item">
+      {% if items.has_next %}
+        <a class="pagination__link cursor_a link" OnClick="paginate('{{ items.next_page_number }}');"><span class="icon-right"></span></a>
+      {% else %}
+        <a class="pagination__link link"><span class="icon-right"></span></a>
+      {% endif %}
+    </li>
+  </ul>
+</nav>
+<script>
+  function paginate(page){
+    const url = new URL(window.location.href);
+    url.searchParams.set('page', page)
+
+    window.location.href = url.href;
+  }
+</script>

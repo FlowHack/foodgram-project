@@ -1,0 +1,39 @@
+{% load static %}
+
+<div class="card" data-id="{{ recipe.id }}">
+    <a href="#" class="link" target="_blank">
+      {% if recipe.image %}
+        <img src="{{ MEDIA_URL }}{{ recipe.image.url }}" alt="Картинка блюда" class="card__image">
+      {% else %}
+        <img src="{% static "images/testCardImg.png" %}" alt="Картинка блюда" class="card__image">
+      {% endif %}
+    </a>
+    <div class="card__body">
+      <a class="card__title link" href="#" target="_blank">{{ recipe.title }}</a>
+      <ul class="card__items">
+        {% for tag in recipe.tag.all %}
+          {% if tag.tag == 'lunch' %}
+            <li class="card__item"><span class="badge badge_style_green">Обед</span></li>
+          {% endif %}
+          {% if tag.tag == 'breakfast' %}
+            <li class="card__item"><span class="badge badge_style_orange">Завтрак</span></li>
+          {% endif %}
+          {% if tag.tag == 'dinner' %}
+            <li class="card__item"><span class="badge badge_style_purple">Ужин</span></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+      <div class="card__items card__items_column">
+        <p class="card__text"><span class="icon-time"></span> {{ recipe.cooking_time }}мин.</p>
+        <p class="card__text"><span class="icon-user"></span>
+          <a href="#" style="color: blue; text-decoration: none;"><i> #{{ recipe.author.username }}</i></a>
+        </p>
+      </div>
+    </div>
+    <div class="card__footer">
+      <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить в покупки</button>
+      {% if user.is_authenticated %}
+      <button class="button button_style_none" name="favorites" data-out><span class="icon-favorite"></span></button>
+      {% endif %}
+    </div>
+</div>
