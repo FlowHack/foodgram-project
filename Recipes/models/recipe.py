@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 
 from .quantity import QuantityIngredient
+from ckeditor_uploader.fields import RichTextUploadingField
 from .tag import Tag
 
 User = get_user_model()
@@ -21,9 +22,10 @@ class Recipe(models.Model):
         help_text='Введите название рецепта',
         max_length=100, blank=False, null=False
     )
-    description = models.TextField(
+    description = RichTextUploadingField(
         verbose_name='Описание рецепта',
-        help_text='Введите описание рецепта'
+        help_text='Введите описание рецепта',
+        blank=False, null=False
     )
     ingredients = models.ManyToManyField(
         QuantityIngredient, related_name='in_recipes',

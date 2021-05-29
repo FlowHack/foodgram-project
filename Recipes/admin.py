@@ -2,6 +2,8 @@ from django.contrib import admin
 
 from .models import (Favorite, Ingredient, QuantityIngredient, Recipe,
                      ShoppingList)
+from Recipes.forms import RecipeAdminForm
+from django.shortcuts import get_object_or_404
 
 
 @admin.register(Favorite)
@@ -13,10 +15,15 @@ class FavoritesAdmin(admin.ModelAdmin):
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author')
+    form = RecipeAdminForm
+    list_display = ('title', 'author', 'add_to_favorite')
     list_filter = ('author', 'title', 'tag')
     search_fields = ('user', 'recipe')
     empty_value_display = '-пусто-'
+
+    def add_to_favorite(self, obj):
+        recipe = get_object_or_404(Recipe, id=obj.id)
+        return recipe.favorites.all().count()
 
 
 @admin.register(Ingredient)
