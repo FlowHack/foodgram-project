@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render
 
 from Recipes import settings as recipes_settings
-from Recipes.models import ShoppingList
 from Recipes.views import functions
 
 User = get_user_model()
@@ -12,9 +12,6 @@ User = get_user_model()
 def index(request):
     data_get = request.GET
     recipes = functions.get_recipes_by_tags(data_get)
-    count_purchases = ShoppingList.objects.filter(
-        user=request.user
-    ).count() if request.user.is_authenticated else 0
 
     paginator = Paginator(
         recipes, recipes_settings.ITEM_RECIPES_INDEX
@@ -24,7 +21,6 @@ def index(request):
 
     context = {
         'recipes': recipes,
-        'count_purchases': count_purchases,
         'paginator': paginator,
         'page': page
     }
@@ -39,21 +35,26 @@ def recipe(request):
     pass
 
 
+@login_required
 def new_recipe(request):
     pass
 
 
+@login_required
 def edit_recipe(request):
     pass
 
 
+@login_required
 def follows_page(request):
     pass
 
 
+@login_required
 def favorite_recipes(request):
     pass
 
 
+@login_required
 def shop_list_page(request):
     pass

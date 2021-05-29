@@ -9,10 +9,9 @@ handler500 = 'Recipes.views.server_error'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('django.contrib.auth.urls')),
-    path('', include('Recipes.urls'))
+    path('', include('Users.urls', namespace='users')),
+    path('', include('Recipes.urls', namespace='recipes'))
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(

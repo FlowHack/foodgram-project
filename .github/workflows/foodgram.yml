@@ -37,7 +37,7 @@ jobs:
         python -m flake8
     - name: Django tests
       run: |
-        python manage.py test
+        python manage.py test --parallel
   
   exit_message:
     runs-on: ubuntu-latest

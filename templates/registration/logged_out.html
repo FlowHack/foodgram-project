@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ title }}{% endblock title %}
+{% block title %}Пароль измёнён{% endblock title %}
+{% block header %}
+  <h1 style="margin: auto; display: block;">Досвидания!</h1>
+{% endblock header %}
 {% block css %}<link rel="stylesheet" href="{% static "pages/index.css" %}">{% endblock css %}
 
 {% block content %}
 <div class="custom-center-block">
-  <h2 class="custom-text-block" align="center">{{ message| safe }}</h2>
+  <p style="font-size: 22px" align="center">Спасибо за проведённое время с нами. Возвращайтесь!</p>
   <div class="custom-button-block">
     <a class="button button_style_blue" style="margin: auto; display: block;" href="{% url 'recipes:index' %}">Перейти на главную</a>
   </div>
