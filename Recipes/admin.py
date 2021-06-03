@@ -1,9 +1,10 @@
 from django.contrib import admin
+from django.shortcuts import get_object_or_404
+
+from Recipes.forms import RecipeAdminForm
 
 from .models import (Favorite, Ingredient, QuantityIngredient, Recipe,
                      ShoppingList)
-from Recipes.forms import RecipeAdminForm
-from django.shortcuts import get_object_or_404
 
 
 @admin.register(Favorite)

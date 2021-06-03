@@ -6,42 +6,50 @@
 {% block header %}{% include 'includes/header.html' with title='Создание рецепта' %}{% endblock header %}
 
 {% block content %}
-<div class="form-container">
-  <form class="form" method="post" enctype="multipart/form-data">
+<div class="form-container" style="width: 100%;">
+  <form class="form" method="post" enctype="multipart/form-data" action="{% url 'recipes:new_recipe' %}" style="width: 90%; max-width: 80%;">
+    {% csrf_token %}
+    {% for error in form.errors %}
+              {{ error|escape }}
+          {% endfor %}
     <div class="form__group">
-      <label for="id_name" class="form__label">Название рецепта</label>
-      <div class="form__field-group">
-        <input type="text" id="id_name" name="name" class="form__input">
-        <span class="form__error"></span>
+    {{ form.tag }}
+    {% for item in form.tag %}
+      {{ item.name }}
+    {% endfor %}
+      <label for="id_title" class="form__label">Название рецепта<span style="color: rgb(255,0,0)">*</span></label>
+      <div class="form__field-group form_field_group_new">
+        <input type="text" id="id_title" name="title" class="form__input" style="max-width: 500px;">
+        <span class="form__error">{{ form.title.errors }}</span>
       </div>
     </div>
     <div class="form__group">
-      <p class="form__label">Теги</p>
-      <div class="form__field-group">
+      <p class="form__label">Теги<span style="color: rgb(255,0,0)">*</span></p>
+      <div class="form__field-group form_field_group_new">
         <div class="tags">
           <div class="tags__item">
             <input type="checkbox" name="breakfast" id="id_breakfast" class="tags__checkbox tags__checkbox_style_orange">
             <label for="id_breakfast" class="tags__label">Завтрак</label>
           </div>
           <div class="tags__item">
-            <input type="checkbox" name="lunch" id="id_lunch" class="tags__checkbox tags__checkbox_style_green" checked>
+            <input type="checkbox" name="lunch" id="id_lunch" class="tags__checkbox tags__checkbox_style_green">
             <label for="id_lunch" class="tags__label">Обед</label>
           </div>
           <div class="tags__item">
-            <input type="checkbox" name="dinner" id="id_dinner" class="tags__checkbox tags__checkbox_style_purple" checked>
+            <input type="checkbox" name="dinner" id="id_dinner" class="tags__checkbox tags__checkbox_style_purple">
             <label for="id_dinner" class="tags__label">Ужин</label>
           </div>
         </div>
-        <span class="form__error"></span>
+        <span class="form__error">{{ form.errors.tags }}</span>
       </div>
     </div>
     <div class="form__group">
-      <label for="nameIngredient" class="form__label">Ингредиенты</label>
-      <div class="form__field-group">
+      <label for="nameIngredient" class="form__label">Ингредиенты<span style="color: rgb(255,0,0)">*</span></label>
+      <div class="form__field-group form_field_group_new">
         <div class="form__field-group-ingredientes">
           <div class="form__dropdown">
-            <input type="text" id="nameIngredient" class="form__input">
-            <div class="form__dropdown-items"></div>
+            <input type="text" id="nameIngredient" class="form__input" style="max-width: 100%">
+            <div class="form__dropdown-items">{{ form.errors.ingredients }}</div>
           </div>
           <input type="number" id="cantidad" class="form__input" min="0">
           <label for="cantidad" class="form__label" id="cantidadVal">шт.</label>
@@ -50,29 +58,30 @@
 
         </div>
         <span class="form__ingredient-link" id="addIng">Добавить ингредиент</span>
-        <span class="form__error"></span>
+        <span class="form__error">{{ form.errors.ingredients }}</span>
       </div>
     </div>
     <div class="form__group">
-      <label for="id_time" class="form__label">Время приготовления</label>
-      <div class="form__field-group form__field-group_time">
-        <input type="text" id="id_time" name="name" class="form__input">
-        <label for="id_time" class="form__label">минут</label>
-        <span class="form__error"></span>
+      <label for="id_cooking_time" class="form__label">Время приготовления<span style="color: rgb(255,0,0)">*</span></label>
+      <div class="form__field-group form__field-group_time  form_field_group_new">
+        <input type="text" id="id_cooking_time" name="cooking_time" class="form__input">
+        <label for="id_cooking_time" class="form__label">минут</label>
+        <span class="form__error">{{ form.cooking_time.errors }}</span>
       </div>
     </div>
     <div class="form__group">
-      <label for="id_description" class="form__label">Описание</label>
-      <div class="form__field-group">
-        <textarea name="description" id="id_description" rows="8" class="form__textarea"></textarea>
-        <span class="form__error"></span>
+      <label for="id_description" class="form__label">Описание<span style="color: rgb(255,0,0)">*</span></label>
+      <div class="form__field-group form_field_group_new">
+        {{ form.media }}
+        {{ form.description }}
+        <span class="form__error">{{ form.description.errors }}</span>
       </div>
     </div>
     <div class="form__group">
-      <span class="form__label">Загрузить фото</span>
-      <div class="form__field-group">
-        <input type="file" name="file" id="id_file">
-        <span class="form__error"></span>
+      <span class="form__label" for="id_image">Загрузить фото</span>
+      <div class="form__field-group form_field_group_new">
+        <input type="file" name="image" id="id_image">
+        <span class="form__error">{{ form.image.errors }}</span>
       </div>
     </div>
     <div class="form__footer">

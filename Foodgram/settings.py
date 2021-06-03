@@ -22,15 +22,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Api',
     'Users',
     'Recipes',
     'ckeditor_uploader',
-    'ckeditor'
+    'ckeditor',
+    'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -99,12 +103,15 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+
+#  CKEDITOR
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/'
 
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
+        'width': 610
     },
 }
 
@@ -115,3 +122,7 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_DJANGO')
 EMAIL_HOST_PASSWORD = os.getenv('PASSWORD_EMAIL_DJANGO')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+#  CORS_HEADERS
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/api/.*$' 

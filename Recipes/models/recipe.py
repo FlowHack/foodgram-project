@@ -1,9 +1,9 @@
 from autoslug import AutoSlugField
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth import get_user_model
 from django.db import models
 
 from .quantity import QuantityIngredient
-from ckeditor_uploader.fields import RichTextUploadingField
 from .tag import Tag
 
 User = get_user_model()
@@ -20,7 +20,7 @@ class Recipe(models.Model):
     title = models.CharField(
         verbose_name='Название',
         help_text='Введите название рецепта',
-        max_length=100, blank=False, null=False
+        max_length=50, blank=False, null=False
     )
     description = RichTextUploadingField(
         verbose_name='Описание рецепта',
@@ -52,6 +52,7 @@ class Recipe(models.Model):
         verbose_name='Картинка рецепта',
         help_text='Вы можете прикрепить к своему рецепту картинку',
         upload_to='recipes/',
+        default='testCardImg.png',
         blank=True,
         null=True
     )
@@ -62,3 +63,9 @@ class Recipe(models.Model):
 
     def __str__(self):
         return f'Рецепт {self.title}'
+
+    @staticmethod
+    def favorites_by_user(user):
+        favorites = user.favorites.values('recipe')
+        favorites_id = [item['recipe'] for item in favorites]
+        return Recipe.objects.filter(id__in=favorites_id)

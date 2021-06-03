@@ -6,6 +6,7 @@
 {% block header %}{% include 'includes/checkbox_header.html' with title='Рецепты' %}{% endblock header %}
 
 {% block content %}
+{% csrf_token %}
 <div class="card-list">
   {% for recipe in page %}
     {% include 'includes/card_recipe.html' with recipe=recipe %}
@@ -13,21 +14,18 @@
 </div>
 {% include 'includes/paginator.html' with items=page paginator=paginator %}
 
-<script src="{% static "js/components/MainCards.js" %}"></script>
-
-<script src="{% static "js/components/Purchases.js" %}"></script>
+<script type="text/javascript" src="{% static "js/components/MainCards.js" %}"></script>
+<script type="text/javascript" src="{% static "js/components/Purchases.js" %}"></script>
 {% if user.is_authenticated %}
-<script src="{% static "js/components/Favorites.js" %}"></script>
+<script type="text/javascript" src="{% static "js/components/Favorites.js" %}"></script>
 {% endif %}
-
-<script src="{% static "js/config/config.js" %}"></script>
-<script src="{% static "js/components/CardList.js" %}"></script>
-<script src="{% static "js/components/Header.js" %}"></script>
-
-<script src="{% static "js/api/Api.js" %}"></script>
+<script type="text/javascript" src="{% static "js/config/config.js" %}"></script>
+<script type="text/javascript" src="{% static "js/components/CardList.js" %}"></script>
+<script type="text/javascript" src="{% static "js/components/Header.js" %}"></script>
+<script type="text/javascript" src="{% static "js/api/Api.js" %}"></script>
 {% if user.is_authenticated %}
-<script src="{% static "indexAuth.js" %}"></script>
+<script type="text/javascript" src="{% static "indexAuth.js" %}"></script>
 {% else %}
-<script src="{% static "indexNotAuth.js" %}"></script>
+<script type="text/javascript" src="{% static "indexNotAuth.js" %}"></script>
 {% endif %}
 {% endblock content %}

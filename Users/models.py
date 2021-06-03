@@ -27,6 +27,7 @@ class Follow(models.Model):
                 fields=['user', 'author'], name='unique author'
             )
         ]
+        ordering = ['-id']
 
     def __str__(self):
         return f'{self.user} подписан на {self.author}'

@@ -1,13 +1,14 @@
-
 class Api {
     constructor(apiUrl) {
         this.apiUrl =  apiUrl;
     }
   getPurchases () {
-    return fetch(`/purchases`, {
+    var url = new URL(window.location.protocol + window.location.host + '/api/purchases/')
+    return fetch(url, {
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
+      method: "GET"
     })
       .then( e => {
           if(e.ok) {
@@ -17,10 +18,13 @@ class Api {
       })
   }
   addPurchases (id) {
-    return fetch(`/purchases`, {
+    var url = new URL(window.location.protocol + window.location.host + '/api/purchases/')
+    console.log(url)
+    return fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value
       },
       body: JSON.stringify({
         id: id
@@ -34,10 +38,12 @@ class Api {
       })
   }
   removePurchases (id){
-    return fetch(`/purchases/${id}`, {
+    var url = new URL(window.location.protocol + window.location.host + '/api/purchases/?id=' + id)
+    return fetch(url, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value
       }
     })
       .then( e => {
@@ -48,10 +54,12 @@ class Api {
       })
   }
   addSubscriptions(id) {
-    return fetch(`/subscriptions`, {
+    var url = new URL(window.location.protocol + window.location.host + '/api/subscriptions/')
+    return fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value
       },
       body: JSON.stringify({
         id: id
@@ -65,10 +73,12 @@ class Api {
       })
   }
   removeSubscriptions (id) {
-    return fetch(`/subscriptions/${id}`, {
+    var url = new URL(window.location.protocol + window.location.host + '/api/subscriptions/?id=' + id)
+    return fetch(url, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value
       }
     })
       .then( e => {
@@ -79,10 +89,12 @@ class Api {
       })
   }
   addFavorites (id)  {
-    return fetch(`/favorites`, {
+    var url = new URL(window.location.protocol + window.location.host + '/api/favorites/')
+    return fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value
       },
       body: JSON.stringify({
         id: id
@@ -96,10 +108,12 @@ class Api {
         })
   }
   removeFavorites (id) {
-    return fetch(`/favorites/${id}`, {
+    var url = new URL(window.location.protocol + window.location.host + '/api/favorites/?id=' + id)
+    return fetch(url, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value
       }
     })
         .then( e => {
@@ -110,7 +124,8 @@ class Api {
         })
   }
     getIngredients  (text)  {
-        return fetch(`/ingredients?query=${text}`, {
+        var url = new URL(window.location.protocol + window.location.host + '/api/ingredients?query=' + text)
+        return fetch(url, {
             headers: {
                 'Content-Type': 'application/json'
             }

@@ -1,4 +1,12 @@
-<h1 class="main__title">{{ title }}</h1>
+{% if author %}
+  <h1 class="main__title">
+    {% if author.first_name and author.last_name %}{{ author.first_name }} {{ author.last_name }}
+    {% else %}{{ author.username }}
+    {% endif %}
+  </h1>
+{% else %}
+  <h1 class="main__title">{{ title }}</h1>
+{% endif %}
 <ul class="tags">
   <li class="tags__item">
     {% if request.GET.breakfast %}
@@ -30,7 +38,7 @@
     const searchString = new URLSearchParams(window.location.search);
     const url = new URL(window.location.href);
     return {'searchString': searchString, 'url': url};
-  }
+  };
   function tags(name){
     data = get_search_and_url();
 
@@ -42,5 +50,4 @@
 
     window.location.href = data.url.href;
   }
-
 </script>
