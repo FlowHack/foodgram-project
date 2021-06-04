@@ -1,4 +1,3 @@
-#  Recipe 1
 recipe_1 = {
     'title': 'Омлет',
     'description': '''
@@ -15,7 +14,14 @@ recipe_1 = {
     'cooking_time': 15
 }
 
-#  Recipes_test
+recipe_url_1 = {
+    'title': 'Что-то тестовое',
+    'description': 'Это тестовый пост',
+    'ingredients': {'яйца куриные': 4, 'молоко': 1000, 'маслины': 34},
+    'tag': ['dinner', 'lunch'],
+    'cooking_time': 34
+}
+
 recipe_test = {
     'title': 'Тестовый рецепт Акакия - {0}',
     'description': 'Тестовое описание для тестового рецепта Акакия - {0}',

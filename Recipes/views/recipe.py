@@ -36,7 +36,7 @@ def author_page(request, username):
     recipes = functions.get_recipes_by_tag(data_get, user=author)
 
     paginator = Paginator(
-        recipes, recipes_settings.ITEM_RECIPES_FAUTHOR_PAGE
+        recipes, recipes_settings.ITEM_RECIPES_AUTHOR_PAGE
     )
     page_number = data_get.get('page')
     page = paginator.get_page(page_number)
@@ -54,7 +54,8 @@ def recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
 
     context = {
-        'recipe': recipe
+        'recipe': recipe,
+        'index': True
     }
     return render(request, 'recipe/singlePage.html', context=context)
 
