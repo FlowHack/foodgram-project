@@ -1,10 +1,10 @@
 from django.urls import reverse
 
 from Recipes import settings as recipe_settings
-from Recipes.models import ShoppingList, Favorite
-from Users.models import Follow
+from Recipes.models import Favorite, ShoppingList
 from Recipes.tests import constants
 from Recipes.tests.test_settings import AllSettings
+from Users.models import Follow
 
 
 class Addition(AllSettings):

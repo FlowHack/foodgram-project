@@ -1,8 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 
-from Recipes.models import (Ingredient, QuantityIngredient, Recipe,
-                            Tag)
+from Recipes.models import Ingredient, QuantityIngredient, Recipe, Tag
 
 User = get_user_model()
 

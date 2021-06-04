@@ -1,6 +1,6 @@
-from Recipes.tests import constants
 from django.urls import reverse
 
+from Recipes.tests import constants
 from Recipes.tests.test_settings import AllSettings
 
 
