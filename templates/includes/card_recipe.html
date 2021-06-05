@@ -27,8 +27,7 @@
       </div>
     </div>
     <div class="card__footer">
-      {% comment %} {% if user.is_authenticated and recipe.author != request.user %} {% endcomment %}
-      {% if user.is_authenticated %}
+      {% if user.is_authenticated and recipe.author != request.user %}
         {% if recipe|in_shoplist:user %}
           <button class="button button_style_light-blue-outline" name="purchases"><span class="icon-check button__icon"></span>Рецепт добавлен</button>
         {% else %}
