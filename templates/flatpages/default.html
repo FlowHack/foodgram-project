@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ flatpage.title }}{% endblock title %}
+{% block css %}<link rel="stylesheet" href="{% static "pages/single.css" %}">{% endblock css %}
+
+{% block content %}
+<div class="container" style="align-items: center; width: 80%; margin: auto;">
+  <div style="display: block; margin: auto; width: 100%;">
+      <h1 align="center" style="font-size: 3em">{{ flatpage.title }}</h1>
+        {{ flatpage.content }}
+  </div>
+</div>
+{% endblock content %}

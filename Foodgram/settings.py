@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'rest_framework',
     'corsheaders',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
 ]
 
 MIDDLEWARE = [
@@ -88,6 +90,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LOGIN_URL = '/auth/login/'
 LOGIN_REDIRECT_URL = 'recipes:index'
 
+SITE_ID = 1 
 
 LANGUAGE_CODE = 'ru-ru'
 TIME_ZONE = 'UTC'

@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.flatpages.views import flatpage
 from django.urls import include, path
 
 handler404 = 'Recipes.views.page_not_found'
@@ -11,6 +12,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('django.contrib.auth.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('about-author/', flatpage, {'url': '/about-author/'}, name='about'),
+    path('about-spec/', flatpage, {'url': '/about-spec/'}, name='terms'),
     path('api/', include('Api.urls')),
     path('', include('Users.urls', namespace='users')),
     path('', include('Recipes.urls', namespace='recipes'))

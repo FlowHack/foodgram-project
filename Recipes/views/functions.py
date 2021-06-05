@@ -96,3 +96,27 @@ def get_tags_and_validate(data, form):
         return {'form': form}
 
     return {'tags': tags}
+
+
+def ingredients_for_download(unprepared_ingredients):
+    ingredients = {}
+
+    for ingredient in unprepared_ingredients:
+        title = ingredient['ingredients__ingredient__title']
+        dimension = ingredient['ingredients__ingredient__dimension']
+        quantity = ingredient['ingredients__quantity']
+
+        if title in ingredients:
+            ingredients[title][1] += quantity
+            continue
+
+        ingredients[title] = [title, quantity, dimension]
+
+    ingredients = list(ingredients.values())
+    for i in range(len(ingredients)):
+        item = ingredients[i]
+        ingredients[i] = f'{item[0].capitalize()} - {item[1]}{item[2]}'
+
+    txt_ingredients = '\n'.join(ingredients)
+
+    return txt_ingredients

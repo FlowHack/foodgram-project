@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from Recipes import settings as recipes_settings
@@ -152,4 +153,35 @@ def favorite_recipes(request):
 
 @login_required
 def shop_list_page(request):
-    pass
+    recipes = Recipe.objects.filter(
+        shoplists__user=request.user
+    )
+
+    context = {
+        'recipes': recipes,
+        'shoplist': True
+    }
+    return render(request, 'shopList.html', context=context)
+
+
+@login_required
+def shoplist_download(request):
+    unprepared_ingredients = Recipe.objects.filter(
+        shoplists__user=request.user
+    ).values(
+        'ingredients__ingredient__title',
+        'ingredients__ingredient__dimension',
+        'ingredients__quantity'
+    )
+    ingredients = functions.ingredients_for_download(unprepared_ingredients)
+    ingredients = f'Список ингредиентов:\n{ingredients}\n\nFoodGram'
+
+    filename = 'FoodGram_ingredients.txt'
+    response = HttpResponse(ingredients, content_type='text/plain')
+    response['Content-Disposition'] = f'attachment; filename={filename}'
+
+    Recipe.objects.filter(
+        shoplists__user=request.user
+    ).delete()
+
+    return response
