@@ -74,7 +74,8 @@ class StaticURLTests(Addition):
             reverse('recipes:shoplist_download'):
                 self.redirect_url('recipes:shoplist_download'),
             reverse('recipes:edit_recipe', args=[self.recipe_url.id]):
-                self.redirect_url('recipes:edit_recipe', args=[self.recipe_url.id])
+                self.redirect_url(
+                    'recipes:edit_recipe', args=[self.recipe_url.id])
         }
 
         self.check_redirects(self.guest_client, kwargs=urls)
@@ -98,7 +99,7 @@ class StaticURLTests(Addition):
 
     def test_authorized_redirect(self):
         urls = {
-            reverse('recipes:edit_recipe', args=[self.recipe_url.id]): 
+            reverse('recipes:edit_recipe', args=[self.recipe_url.id]):
                 reverse('recipes:recipe', args=[self.recipe_url.id]),
         }
 
@@ -119,7 +120,7 @@ class StaticURLTests(Addition):
                 'recipe/authorRecipe.html',
             reverse('recipes:recipe', args=[self.recipe_url.id]):
                 'recipe/singlePage.html',
-            reverse('recipes:edit_recipe', args=[self.recipe_url.id]): 
+            reverse('recipes:edit_recipe', args=[self.recipe_url.id]):
                 'recipe/formChangeRecipe.html'
         }
 
