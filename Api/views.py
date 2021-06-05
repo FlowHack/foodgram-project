@@ -13,7 +13,6 @@ User = get_user_model()
 @api_view(['POST', 'DELETE'])
 def purchases(request):
     recipe_id = request.data.get('id') or request.GET.get('id')
-    print(recipe_id)
 
     if request.method == 'POST':
         try:
@@ -39,7 +38,6 @@ def purchases(request):
             ).delete()
             return Response({'success': 'true'})
         except Exception as error:
-            print(str(error))
             return Response(
                 {'success': 'false', 'error': str(error)},
                 status=status.HTTP_404_NOT_FOUND

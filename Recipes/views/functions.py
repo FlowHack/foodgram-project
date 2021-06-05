@@ -120,3 +120,46 @@ def ingredients_for_download(unprepared_ingredients):
     txt_ingredients = '\n'.join(ingredients)
 
     return txt_ingredients
+
+
+def get_ingredients_for_edit(recipe):
+    __ingredients = recipe.ingredients.all().values(
+        'ingredient__title',
+        'ingredient__dimension',
+        'quantity'
+    )
+    ingredients = []
+
+    for i in range(len(__ingredients)):
+        ingredient = __ingredients[i]
+        ing_id = i + 1
+        title = ingredient['ingredient__title']
+        dimension = ingredient['ingredient__dimension']
+        quantity = ingredient['quantity']
+
+        ingredients.append(
+            {
+                'ing_id': f'ing_{ing_id}',
+                'name': {
+                    'name': f'nameIngredient_{ing_id}',
+                    'value': title
+                },
+                'value': {
+                    'name': f'valueIngredient_{ing_id}',
+                    'value': quantity
+                },
+                'units': {
+                    'name': f'unitsIngredient_{ing_id}',
+                    'value': dimension
+                }
+            }
+        )
+
+    return ingredients
+
+
+def get_tags_for_edit(recipe):
+    tags = recipe.tag.all().values('tag')
+    tags = [tag['tag'] for tag in tags]
+
+    return tags

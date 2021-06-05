@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load user_filters %}
 {% load static %}
 
 {% block title %}Создание рецепта{% endblock title %}
@@ -9,17 +10,10 @@
 <div class="form-container" style="width: 100%;">
   <form class="form" method="post" enctype="multipart/form-data" action="{% url 'recipes:new_recipe' %}" style="width: 90%; max-width: 80%;">
     {% csrf_token %}
-    {% for error in form.errors %}
-              {{ error|escape }}
-          {% endfor %}
     <div class="form__group">
-    {{ form.tag }}
-    {% for item in form.tag %}
-      {{ item.name }}
-    {% endfor %}
       <label for="id_title" class="form__label">Название рецепта<span style="color: rgb(255,0,0)">*</span></label>
       <div class="form__field-group form_field_group_new">
-        <input type="text" id="id_title" name="title" class="form__input" style="max-width: 500px;">
+        {{ form.title|addclass:"form__input&max-width: 500px;" }}
         <span class="form__error">{{ form.title.errors }}</span>
       </div>
     </div>
@@ -55,7 +49,6 @@
           <label for="cantidad" class="form__label" id="cantidadVal">шт.</label>
         </div>
         <div class="form__field-group-ingredientes-container">
-
         </div>
         <span class="form__ingredient-link" id="addIng">Добавить ингредиент</span>
         <span class="form__error">{{ form.errors.ingredients }}</span>
@@ -64,7 +57,7 @@
     <div class="form__group">
       <label for="id_cooking_time" class="form__label">Время приготовления<span style="color: rgb(255,0,0)">*</span></label>
       <div class="form__field-group form__field-group_time  form_field_group_new">
-        <input type="text" id="id_cooking_time" name="cooking_time" class="form__input">
+        {{ form.cooking_time|addclass:"form__input" }}
         <label for="id_cooking_time" class="form__label">минут</label>
         <span class="form__error">{{ form.cooking_time.errors }}</span>
       </div>
@@ -80,7 +73,7 @@
     <div class="form__group">
       <span class="form__label" for="id_image">Загрузить фото</span>
       <div class="form__field-group form_field_group_new">
-        <input type="file" name="image" id="id_image">
+        {{ form.image|addclass:"form__file-button" }}
         <span class="form__error">{{ form.image.errors }}</span>
       </div>
     </div>

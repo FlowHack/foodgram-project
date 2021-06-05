@@ -57,7 +57,7 @@
             {% endif %}
            </p>
         </li>
-        <li class="single-card__item"> <a style="margin-left: 2.5em" href="#" class="single-card__text">Редактировать рецепт</a></li>
+        <li class="single-card__item"> <a style="margin-left: 2.5em" href="{% url 'recipes:edit_recipe' recipe.id %}" class="single-card__text">Редактировать рецепт</a></li>
       </ul>
       </div>
     <ul class="single-card__items">

@@ -21,3 +21,12 @@ def in_shoplist(recipe, user):
 @register.filter
 def in_favorite(recipe, user):
     return user.favorites.filter(recipe=recipe)
+
+
+@register.filter
+def addclass(field, css):
+    css = css.split('&')
+    if len(css) == 2:
+        return field.as_widget(attrs={'class': css[0], 'style': css[1]})
+
+    return field.as_widget(attrs={'class': css[0]})

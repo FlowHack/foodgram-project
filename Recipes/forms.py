@@ -14,9 +14,6 @@ class RecipeAdminForm(forms.ModelForm):
 
 class RecipeForm(forms.ModelForm):
     description = forms.CharField(widget=CKEditorUploadingWidget())
-    breakfast = forms.CheckboxInput()
-    lunch = forms.CheckboxInput()
-    dinner = forms.CheckboxInput()
 
     class Meta:
         model = Recipe

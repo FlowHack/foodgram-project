@@ -3,8 +3,7 @@ class Api {
         this.apiUrl =  apiUrl;
     }
   getPurchases () {
-    var url = new URL(window.location.protocol + window.location.host + '/api/purchases/')
-    return fetch(url, {
+    return fetch(`${this.apiUrl}/purchases/`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -18,9 +17,7 @@ class Api {
       })
   }
   addPurchases (id) {
-    var url = new URL(window.location.protocol + window.location.host + '/api/purchases/')
-    console.log(url)
-    return fetch(url, {
+    return fetch(`${this.apiUrl}/purchases/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,8 +35,7 @@ class Api {
       })
   }
   removePurchases (id){
-    var url = new URL(window.location.protocol + window.location.host + '/api/purchases/?id=' + id)
-    return fetch(url, {
+    return fetch(`${this.apiUrl}/purchases/?id=${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -54,8 +50,7 @@ class Api {
       })
   }
   addSubscriptions(id) {
-    var url = new URL(window.location.protocol + window.location.host + '/api/subscriptions/')
-    return fetch(url, {
+    return fetch(`${this.apiUrl}/subscriptions/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -73,8 +68,7 @@ class Api {
       })
   }
   removeSubscriptions (id) {
-    var url = new URL(window.location.protocol + window.location.host + '/api/subscriptions/?id=' + id)
-    return fetch(url, {
+    return fetch(`${this.apiUrl}/subscriptions/?id=${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -89,8 +83,7 @@ class Api {
       })
   }
   addFavorites (id)  {
-    var url = new URL(window.location.protocol + window.location.host + '/api/favorites/')
-    return fetch(url, {
+    return fetch(`${this.apiUrl}/favorites/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -108,8 +101,7 @@ class Api {
         })
   }
   removeFavorites (id) {
-    var url = new URL(window.location.protocol + window.location.host + '/api/favorites/?id=' + id)
-    return fetch(url, {
+    return fetch(`${this.apiUrl}/favorites/?id=${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -124,8 +116,7 @@ class Api {
         })
   }
     getIngredients  (text)  {
-        var url = new URL(window.location.protocol + window.location.host + '/api/ingredients?query=' + text)
-        return fetch(url, {
+        return fetch(`${this.apiUrl}/ingredients?query=${text}`, {
             headers: {
                 'Content-Type': 'application/json'
             }

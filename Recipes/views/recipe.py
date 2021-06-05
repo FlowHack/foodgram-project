@@ -68,7 +68,6 @@ def new_recipe(request):
     if form.is_valid():
         data = request.POST.dict()
         cleaned_data = form.cleaned_data
-        recipe = form.save(commit=False)
 
         title = cleaned_data.get('title')
         description = cleaned_data.get('description')
@@ -107,8 +106,53 @@ def new_recipe(request):
 
 
 @login_required
-def edit_recipe(request):
-    pass
+def edit_recipe(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+
+    if request.user != recipe.author:
+        return redirect('recipes:recipe', recipe_id=recipe_id)
+
+    form = RecipeForm(
+        request.POST or None,
+        files=request.FILES or None,
+        instance=recipe
+    )
+    ingredients = functions.get_ingredients_for_edit(recipe)
+    tags = functions.get_tags_for_edit(recipe)
+
+    if form.is_valid():
+        data = request.POST.dict()
+        recipe = form.save(commit=False)
+        recipe.author = request.user
+
+        data_ingredients = functions.get_ingredients_and_validate(data, form)
+        ingredients = data_ingredients.get('ingredients')
+        data_tags = functions.get_tags_and_validate(data, form)
+        tags = data_tags.get('tags')
+
+        if ingredients is None or tags is None:
+            form = data_ingredients.get('form') or data_tags.get('form')
+            context = {
+                'form': form,
+                'tags': tags,
+                'ingredients': ingredients,
+                'new_recipe': True
+            }
+            return render(request, 'recipe/formRecipe.html', context=context)
+
+        recipe.ingredients.set(ingredients)
+        recipe.tag.set(tags)
+        recipe.save()
+
+        return redirect('recipes:index')
+
+    context = {
+        'form': form,
+        'tags': tags,
+        'ingredients': ingredients,
+        'new_recipe': True
+    }
+    return render(request, 'recipe/formChangeRecipe.html', context=context)
 
 
 @login_required
