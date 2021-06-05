@@ -117,9 +117,7 @@ def ingredients_for_download(unprepared_ingredients):
         item = ingredients[i]
         ingredients[i] = f'{item[0].capitalize()} - {item[1]}{item[2]}'
 
-    txt_ingredients = '\n'.join(ingredients)
-
-    return txt_ingredients
+    return '\n'.join(ingredients)
 
 
 def get_ingredients_for_edit(recipe):
@@ -160,6 +158,5 @@ def get_ingredients_for_edit(recipe):
 
 def get_tags_for_edit(recipe):
     tags = recipe.tag.all().values('tag')
-    tags = [tag['tag'] for tag in tags]
 
-    return tags
+    return [tag['tag'] for tag in tags]
