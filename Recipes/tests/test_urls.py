@@ -43,7 +43,10 @@ class Addition(AllSettings):
                 )
 
     @staticmethod
-    def redirect_url(url):
+    def redirect_url(url, args=None):
+        if args is not None:
+            return reverse('login') + '?next=' + reverse(url, args=args)
+
         return reverse('login') + '?next=' + reverse(url)
 
 
@@ -67,7 +70,11 @@ class StaticURLTests(Addition):
             reverse('recipes:follow'):
                 self.redirect_url('recipes:follow'),
             reverse('recipes:favorite'):
-                self.redirect_url('recipes:favorite')
+                self.redirect_url('recipes:favorite'),
+            reverse('recipes:shoplist_download'):
+                self.redirect_url('recipes:shoplist_download'),
+            reverse('recipes:edit_recipe', args=[self.recipe_url.id]):
+                self.redirect_url('recipes:edit_recipe', args=[self.recipe_url.id])
         }
 
         self.check_redirects(self.guest_client, kwargs=urls)
@@ -76,20 +83,23 @@ class StaticURLTests(Addition):
         """
         Тестирование доступности страниц для авторизированных пользователей
         """
-        urls: dict[str, int] = {
+        urls = {
             reverse('recipes:index'): 200,
             reverse('recipes:author_page', args=[self.user.username]): 200,
             reverse('recipes:recipe', args=[self.recipe_url.id]): 200,
             reverse('recipes:new_recipe'): 200,
             reverse('recipes:follow'): 200,
-            reverse('recipes:favorite'): 200
-
+            reverse('recipes:favorite'): 200,
+            reverse('recipes:edit_recipe', args=[self.recipe_url.id]): 200,
+            reverse('recipes:shoplist_download'): 200
         }
 
         self.check_status_code(self.authorized_client, kwargs=urls)
 
     def test_authorized_redirect(self):
         urls = {
+            reverse('recipes:edit_recipe', args=[self.recipe_url.id]): 
+                reverse('recipes:recipe', args=[self.recipe_url.id]),
         }
 
         self.check_redirects(
@@ -108,7 +118,9 @@ class StaticURLTests(Addition):
             reverse('recipes:author_page', args=[self.user.username]):
                 'recipe/authorRecipe.html',
             reverse('recipes:recipe', args=[self.recipe_url.id]):
-                'recipe/singlePage.html'
+                'recipe/singlePage.html',
+            reverse('recipes:edit_recipe', args=[self.recipe_url.id]): 
+                'recipe/formChangeRecipe.html'
         }
 
         for reverse_name, template in template_names.items():
