@@ -11,7 +11,7 @@ User = get_user_model()
 
 class Recipe(models.Model):
     author = models.ForeignKey(
-        User, on_delete=models.SET_NULL,
+        User, on_delete=models.DO_NOTHING,
         related_name='recipes',
         verbose_name='Автор',
         help_text='Введите автора рецепта',
