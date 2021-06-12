@@ -8,7 +8,6 @@ handler404 = 'Recipes.views.page_not_found'
 handler500 = 'Recipes.views.server_error'
 
 urlpatterns = [
-    path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('auth/', include('django.contrib.auth.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
@@ -24,5 +23,5 @@ if settings.DEBUG:
         settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
     )
     urlpatterns += static(
-        settings.STATIC_URL, document_root=settings.STATICFILES_DIRS
+        settings.STATIC_URL, document_root=settings.STATIC_ROOT
     )
