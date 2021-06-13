@@ -1,8 +1,9 @@
 # Foodgram
 
-Сайт: - _http://www.foodgram-prod.tk_
-      - _http://foodgram-prod.tk_
-      - _http://84.252.140.69/_
+Сайт: 
+- _http://www.foodgram-prod.tk_
+- _http://foodgram-prod.tk_
+- _http://84.252.140.69/_
 
 ![example workflow](https://github.com/FlowHack/foodgram-project/actions/workflows/foodgram.yml/badge.svg)
 
