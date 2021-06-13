@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from Recipes import settings as recipes_settings
 from Recipes.forms import RecipeForm
-from Recipes.models import Recipe
+from Recipes.models import Recipe, ShoppingList
 from Recipes.views import functions
 
 User = get_user_model()
@@ -226,8 +226,8 @@ def shoplist_download(request):
     response = HttpResponse(ingredients, content_type='text/plain')
     response['Content-Disposition'] = f'attachment; filename={filename}'
 
-    Recipe.objects.filter(
-        shoplists__user=request.user
+    ShoppingList.objects.filter(
+        user=request.user
     ).delete()
 
     return response
