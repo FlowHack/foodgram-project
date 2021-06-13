@@ -238,4 +238,4 @@ def delete_recipe(request, recipe_id):
     author = recipe.author.username
     recipe.delete()
 
-    return redirect('author_page', args=[author])
+    return redirect('recipes:author_page', args=[author])
