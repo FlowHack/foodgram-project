@@ -137,7 +137,7 @@ def edit_recipe(request, recipe_id):
                 'tags': tags,
                 'ingredients': ingredients,
                 'new_recipe': True,
-                'recipe_id': recipe_id
+                'recipe': recipe
             }
             return render(request, 'recipe/formRecipe.html', context=context)
 
@@ -152,7 +152,7 @@ def edit_recipe(request, recipe_id):
         'tags': tags,
         'ingredients': ingredients,
         'new_recipe': True,
-        'recipe_id': recipe_id
+        'recipe': recipe
     }
     return render(request, 'recipe/formChangeRecipe.html', context=context)
 
@@ -233,9 +233,7 @@ def shoplist_download(request):
     return response
 
 
-def delete_recipe(request, recipe_id):
-    recipe = get_object_or_404(Recipe, id=recipe_id)
-    author = recipe.author.username
-    recipe.delete()
+def delete_recipe(request, recipe_id, username):
+    Recipe.objects.filter(id=recipe_id).delete()
 
-    return redirect('recipes:author_page', args=[author])
+    return redirect('recipes:author_page', args=[username])
