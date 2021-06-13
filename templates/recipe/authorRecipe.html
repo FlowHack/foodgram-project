@@ -12,6 +12,11 @@
     <button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button>
   </p>
 </div>
+<div class="author-subscribe">
+  <p style="padding: 0 0 2em 0;">
+    <a class="button button_style_light-blue button_size_subscribe" href="{% url 'password_reset' %}">Изменить пароль</a>
+  </p>
+</div>
 <div class="card-list">
   {% for recipe in page %}
     {% include 'includes/card_recipe.html' with recipe=recipe %}

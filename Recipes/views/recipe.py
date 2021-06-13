@@ -234,8 +234,6 @@ def shoplist_download(request):
 
 
 def delete_recipe(request, recipe_id):
-    recipe = Recipe.objects.filter(id=recipe_id)
-    author = recipe.author.username
-    recipe.delete()
+    Recipe.objects.filter(id=recipe_id).delete()
 
-    return redirect('recipes:author_page', username=author)
+    return redirect('recipes:author_page', username=request.user.username)
