@@ -13,7 +13,7 @@ urlpatterns = [
     path('recipe/<int:recipe_id>', views.recipe, name='recipe'),
     path('recipe-edit/<int:recipe_id>', views.edit_recipe, name='edit_recipe'),
     path(
-        'recipe-delete/<int:recipe_id>/<str:username>', views.delete_recipe,
+        'recipe-delete/<int:recipe_id>', views.delete_recipe,
         name='delete_recipe'
     ),
     path('shoplist/', views.shop_list_page, name='shoplist'),
