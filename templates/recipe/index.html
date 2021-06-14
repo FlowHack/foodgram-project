@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load cache %}
 
 {% block title %}Рецепты{% endblock title %}
 {% block css %}<link rel="stylesheet" href="{% static "pages/index.css" %}">{% endblock css %}
@@ -7,11 +8,13 @@
 
 {% block content %}
 {% csrf_token %}
-<div class="card-list">
-  {% for recipe in page %}
-    {% include 'includes/card_recipe.html' with recipe=recipe %}
-  {% endfor %}
-</div>
+{% cache 20 content page %}
+  <div class="card-list">
+    {% for recipe in page %}
+      {% include 'includes/card_recipe.html' with recipe=recipe %}
+    {% endfor %}
+  </div>
+{% endcache content %}
 {% include 'includes/paginator.html' with items=page paginator=paginator %}
 
 <script type="text/javascript" src="{% static "js/components/MainCards.js" %}"></script>

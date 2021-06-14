@@ -7,11 +7,11 @@
 
 {% block content %}
 {% csrf_token %}
-<div class="card-list">
-  {% for recipe in page %}
-    {% include 'includes/card_recipe.html' with recipe=recipe %}
-  {% endfor %}
-</div>
+  <div class="card-list">
+    {% for recipe in page %}
+      {% include 'includes/card_recipe.html' with recipe=recipe %}
+    {% endfor %}
+  </div>
 {% include 'includes/paginator.html' with items=page paginator=paginator %}
 
 <script type="text/javascript" src="{% static "js/components/MainCards.js" %}"></script>
