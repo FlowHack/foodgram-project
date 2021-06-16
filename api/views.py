@@ -3,9 +3,9 @@ from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+import api.settings as api_settings
 from recipes.models import Favorite, Ingredient, Recipe, ShoppingList
 from users.models import Follow
-import api.settings as api_settings
 
 User = get_user_model()
 
@@ -32,7 +32,9 @@ def purchases(request):
         if not result:
             return api_settings.RESPONSE_400_NOT_EXISTS
 
-        return api_settings.Response({'success': 'true'})
+        return api_settings.RESPONSE_SUCCESS
+
+    return api_settings.RESPONSE_400
 
 
 @api_view(['POST', 'DELETE'])
@@ -58,6 +60,8 @@ def favorites(request):
             return api_settings.RESPONSE_400_NOT_EXISTS
 
         return api_settings.RESPONSE_SUCCESS
+
+    return api_settings.RESPONSE_400
 
 
 @api_view(['POST', 'DELETE'])
@@ -89,6 +93,8 @@ def follow(request):
             return api_settings.RESPONSE_400_NOT_EXISTS
 
         return api_settings.RESPONSE_SUCCESS
+
+    return api_settings.RESPONSE_400
 
 
 @api_view(['GET'])

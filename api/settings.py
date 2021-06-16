@@ -18,3 +18,7 @@ RESPONSE_400_CANT_SUBSCRIBE_YOURSELF = Response(
     {'success': 'false', 'error': 'Нельзя подписаться на себя'}, 
     status=status.HTTP_400_BAD_REQUEST
 )
+RESPONSE_400 = Response(
+    {'success': 'false', 'error': 'Неверный запрос'}, 
+    status=status.HTTP_400_BAD_REQUEST
+)

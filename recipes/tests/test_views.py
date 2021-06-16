@@ -1,4 +1,5 @@
 from django.urls import reverse
+
 from recipes import settings as recipe_settings
 from recipes.models import Favorite, ShoppingList
 from recipes.tests import constants

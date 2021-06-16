@@ -1,4 +1,5 @@
 from django.urls import reverse
+
 from recipes.tests import constants
 from recipes.tests.test_settings import AllSettings
 

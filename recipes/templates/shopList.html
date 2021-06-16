@@ -7,7 +7,9 @@
 {% endblock css %}
 
 {% block header %}
-  <h1 class="main__title main_header">Список покупок</h1>
+  {% if recipes|length > 0 %}
+    <h1 class="main__title">Список покупок</h1>
+  {% endif %}
 {% endblock header %}
 
 {% block content %}

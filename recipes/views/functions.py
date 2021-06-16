@@ -1,5 +1,6 @@
-from recipes.models import Ingredient, QuantityIngredient, Tag, Recipe
 from collections import defaultdict
+
+from recipes.models import Ingredient, QuantityIngredient, Recipe, Tag
 
 
 def get_tags(get_params):

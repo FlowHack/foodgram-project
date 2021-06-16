@@ -1,17 +1,16 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
+from django.forms.utils import ErrorList
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.base import View
 from wkhtmltopdf.views import PDFTemplateResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 from recipes import settings as recipes_settings
-from django.forms.utils import ErrorList
 from recipes.forms import RecipeForm
 from recipes.models import Recipe, Tag
 from recipes.views import functions
-
 
 User = get_user_model()
 
@@ -240,11 +239,10 @@ class ShoplistPDF(LoginRequiredMixin, View):
         ingredietns = functions.ingredients_for_download(request.user)
         context = {'ingredients': ingredietns}
 
-        response = PDFTemplateResponse(request=request,
-                                       template=self.template,
-                                       filename=self.filename,
-                                       context=context,
-                                       show_content_in_browser=False,
-                                       )
-
-        return response
+        return PDFTemplateResponse(
+            request=request,
+            template=self.template,
+            filename=self.filename,
+            context=context,
+            show_content_in_browser=False
+        )
