@@ -8,38 +8,25 @@
   <h1 class="main__title">{{ title }}</h1>
 {% endif %}
 <ul class="tags">
+  {% for tag in tags %}
   <li class="tags__item">
-    {% if request.GET.breakfast %}
-      <span id="breakfast" class="tags__checkbox tags__checkbox_style_orange tags__checkbox_active" OnClick="tags('breakfast');"></span>
+    {% if tag.tag in request.GET %}
+      <span id="{{ tag.tag }}" class="tags__checkbox tags__checkbox_style_{{ tag.color }} tags__checkbox_active" OnClick="add_or_delete_tags('{{ tag.tag }}');"></span>
     {% else %}
-      <span id="breakfast" class="tags__checkbox tags__checkbox_style_orange" OnClick="tags('breakfast');"></span>
+      <span id="{{ tag.tag }}" class="tags__checkbox tags__checkbox_style_{{ tag.color }}" OnClick="add_or_delete_tags('{{ tag.tag }}');"></span>
     {% endif %}
-    <span class="tags__label">Завтрак</span>
+    <span class="tags__label">{{ tag.title }}</span>
   </li>
-  <li class="tags__item">
-    {% if request.GET.lunch %}
-      <span id="lunch" class="tags__checkbox tags__checkbox_style_green tags__checkbox_active" OnClick="tags('lunch');"></span>
-    {% else %}
-      <span id="lunch" class="tags__checkbox tags__checkbox_style_green" OnClick="tags('lunch');"></span>
-    {% endif %}
-    <span for="lunch" class="tags__label">Обед</span>
-  </li>
-  <li class="tags__item">
-    {% if request.GET.dinner %}
-    <span id="dinner" class="tags__checkbox tags__checkbox_style_purple tags__checkbox_active" OnClick="tags('dinner');"></span>
-    {% else %}
-    <span id="dinner" class="tags__checkbox tags__checkbox_style_purple" OnClick="tags('dinner');"></span>
-    {% endif %}
-    <label for="dinner" class="tags__label">Ужин</label>
-  </li>
+  {% endfor %}
 </ul>
+
 <script>
   function get_search_and_url(){
     const searchString = new URLSearchParams(window.location.search);
     const url = new URL(window.location.href);
     return {'searchString': searchString, 'url': url};
   };
-  function tags(name){
+  function add_or_delete_tags(name){
     data = get_search_and_url();
 
     if (data.searchString.has(name)){

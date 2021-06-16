@@ -1,0 +1,40 @@
+<html>
+
+<header>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0
+    }
+    body {
+      background: rgba(0, 0, 0, 0.3);
+    }
+    h1, h3 {
+      color: rgba(255, 255, 255, 0.8)
+    }
+    h1 {
+      margin: 2em 0 3em 0;
+    }
+    .foodgram {
+      text-align: right;
+      color: rgba(255, 0, 0, 0.6);
+      margin-right: 1em;
+      margin-top: 3em
+    }
+  </style>
+</header>
+
+<body>
+<h1 align="center">Список покупок</h1>
+{% for ingredient in ingredients %}
+    <h3 align="center">
+      {{ ingredient }}
+    </h3>
+{% endfor %}
+<h3 class="foodgram">
+  Foodgram
+</h3>
+</body>
+
+</html>

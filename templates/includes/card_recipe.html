@@ -8,15 +8,7 @@
       <a class="card__title link" href="{% url 'recipes:recipe' recipe.id %}" target="_blank">{{ recipe.title }}</a>
       <ul class="card__items">
         {% for tag in recipe.tag.all %}
-          {% if tag.tag == 'lunch' %}
-            <li class="card__item"><span class="badge badge_style_green">Обед</span></li>
-          {% endif %}
-          {% if tag.tag == 'breakfast' %}
-            <li class="card__item"><span class="badge badge_style_orange">Завтрак</span></li>
-          {% endif %}
-          {% if tag.tag == 'dinner' %}
-            <li class="card__item"><span class="badge badge_style_purple">Ужин</span></li>
-          {% endif %}
+          <li class="card__item"><span class="badge badge_style_{{ tag.color }}">{{ tag.title }}</span></li>
         {% endfor %}
       </ul>
       <div class="card__items card__items_column">
@@ -27,17 +19,9 @@
       </div>
     </div>
     <div class="card__footer">
-      {% if user.is_authenticated and recipe.author != request.user %}
-        {% if recipe|in_shoplist:user %}
-          <button class="button button_style_light-blue-outline" name="purchases"><span class="icon-check button__icon"></span>Рецепт добавлен</button>
-        {% else %}
-          <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить в покупки</button>
-        {% endif %}
-        {% if recipe|in_favorite:user %}
-          <button class="button button_style_none" name="favorites"><span class="icon-favorite icon-favorite_active"></span></button>
-        {% else %}
-          <button class="button button_style_none" name="favorites" data-out><span class="icon-favorite"></span></button>
-        {% endif %}
+      {% if request.user.is_authenticated and recipe.author != request.user %}
+        {% include 'buttons/shoplist.html' with recipe=recipe %}
+        {% include 'buttons/favorite.html' with recipe=recipe %}
       {% endif %}
     </div>
 </div>

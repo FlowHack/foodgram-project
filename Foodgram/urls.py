@@ -4,8 +4,8 @@ from django.contrib import admin
 from django.contrib.flatpages.views import flatpage
 from django.urls import include, path
 
-handler404 = 'Recipes.views.page_not_found'
-handler500 = 'Recipes.views.server_error'
+handler404 = 'recipes.views.page_not_found'
+handler500 = 'recipes.views.server_error'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -13,9 +13,9 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('about-author/', flatpage, {'url': '/about-author/'}, name='about'),
     path('about-spec/', flatpage, {'url': '/about-spec/'}, name='terms'),
-    path('api/', include('Api.urls')),
-    path('', include('Users.urls', namespace='users')),
-    path('', include('Recipes.urls', namespace='recipes'))
+    path('api/', include('api.urls')),
+    path('', include('users.urls', namespace='users')),
+    path('', include('recipes.urls', namespace='recipes'))
 ]
 
 if settings.DEBUG:

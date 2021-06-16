@@ -6,9 +6,10 @@
       <li class="nav__item {% if follow %}nav__item_active{% endif %}"><a href="{% url 'recipes:follow' %}" class="nav__link link">Мои подписки</a></li>
       <li class="nav__item {% if new_recipe %}nav__item_active{% endif %}"><a href="{% url 'recipes:new_recipe' %}" class="nav__link link">Создать рецепт</a></li>
       <li class="nav__item {% if favorite %}nav__item_active{% endif %}"><a href="{% url 'recipes:favorite' %}" class="nav__link link">Избранное</a></li>
-      <li class="nav__item {% if shoplist %}nav__item_active{% endif %}"><a href="{% url 'recipes:shoplist' %}" class="nav__link link">Список покупок</a>
-        <span class="badge badge_style_blue nav__badge" id="counter">
-          {{ request.user.shoplists.all.count }}
+      <li class="nav__item {% if shoplist %}nav__item_active{% endif %}">
+        <a href="{% url 'recipes:shoplist' %}" class="nav__link link">Список покупок</a>
+        <span class="badge badge_style_blue nav__badge {% if user.shoplists.all.count == 0 %}none_display{% endif %}" id="counter">
+          {{ user.shoplists.all.count }}
         </span>
       </li>
     </ul>

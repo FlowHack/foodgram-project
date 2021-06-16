@@ -8,11 +8,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY') or '(r7-&iv&z89%p$1z&-%r4g36f(_@if2i&jf$ek(8_=7wb%dsb4'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-AUTH_USER_MODEL = 'Users.User'
+AUTH_USER_MODEL = 'users.User'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -21,9 +21,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Api',
-    'Users',
-    'Recipes',
+    'wkhtmltopdf',
+    'api',
+    'users',
+    'recipes',
     'ckeditor_uploader',
     'ckeditor',
     'rest_framework',
@@ -45,11 +46,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Foodgram.urls'
 
-TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,12 +67,18 @@ WSGI_APPLICATION = 'Foodgram.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': os.environ.get('DB_NAME'),
+        # 'USER': os.environ.get('POSTGRES_USER'),
+        # 'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        # 'HOST': os.environ.get('DB_HOST'),
+        # 'PORT': os.environ.get('DB_PORT'),
     }
 }
 
@@ -93,6 +99,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LOGIN_URL = '/auth/login/'
 LOGIN_REDIRECT_URL = 'recipes:index'
+WKHTMLTOPDF_CMD = '/usr/bin/wkhtmltopdf'
+WKHTMLTOPDF_CMD_OPTIONS = {
+    'quiet': True,
+}
 
 SITE_ID = 1 
 
