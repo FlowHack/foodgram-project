@@ -1,3 +1,5 @@
+from django.contrib.flatpages.models import FlatPage
+from django.contrib.sites.models import Site
 from django.urls import reverse
 
 from recipes.tests import constants
@@ -10,6 +12,19 @@ class Addition(AllSettings):
         self.recipe_url = self.create_recipe(
             user=self.user, data_recipe=constants.recipe_url_1
         )
+        site = Site.objects.get(pk=1)
+        self.flat_about = FlatPage.objects.create(
+            url='/about-author/',
+            title='about',
+            content='<b>content</b>'
+        )
+        self.flat_spec = FlatPage.objects.create(
+            url='/about-spec/',
+            title='about spec',
+            content='<b>content</b>'
+        )
+        self.flat_about.sites.add(site)
+        self.flat_spec.sites.add(site)
 
     def check_status_code(self, who, **kwargs):
         """Просмотр статуса доступности страницы для клиента
@@ -58,7 +73,10 @@ class StaticURLTests(Addition):
         urls = {
             reverse('recipes:index'): 200,
             reverse('recipes:author_page', args=[self.user.username]): 200,
-            reverse('recipes:recipe', args=[self.recipe_url.id]): 200
+            reverse('recipes:recipe', args=[self.recipe_url.slug]): 200,
+            self.flat_about.url: 200,
+            self.flat_spec.url: 200,
+            'Not_IT_URL': 404
         }
 
         self.check_status_code(self.guest_client, kwargs=urls)
@@ -73,9 +91,9 @@ class StaticURLTests(Addition):
                 self.redirect_url('recipes:favorite'),
             reverse('recipes:shoplist_download'):
                 self.redirect_url('recipes:shoplist_download'),
-            reverse('recipes:edit_recipe', args=[self.recipe_url.id]):
+            reverse('recipes:edit_recipe', args=[self.recipe_url.slug]):
                 self.redirect_url(
-                    'recipes:edit_recipe', args=[self.recipe_url.id])
+                    'recipes:edit_recipe', args=[self.recipe_url.slug])
         }
 
         self.check_redirects(self.guest_client, kwargs=urls)
@@ -87,11 +105,11 @@ class StaticURLTests(Addition):
         urls = {
             reverse('recipes:index'): 200,
             reverse('recipes:author_page', args=[self.user.username]): 200,
-            reverse('recipes:recipe', args=[self.recipe_url.id]): 200,
+            reverse('recipes:recipe', args=[self.recipe_url.slug]): 200,
             reverse('recipes:new_recipe'): 200,
             reverse('recipes:follow'): 200,
             reverse('recipes:favorite'): 200,
-            reverse('recipes:edit_recipe', args=[self.recipe_url.id]): 200,
+            reverse('recipes:edit_recipe', args=[self.recipe_url.slug]): 200,
             reverse('recipes:shoplist_download'): 200
         }
 
@@ -99,8 +117,8 @@ class StaticURLTests(Addition):
 
     def test_authorized_redirect(self):
         urls = {
-            reverse('recipes:edit_recipe', args=[self.recipe_url.id]):
-                reverse('recipes:recipe', args=[self.recipe_url.id]),
+            reverse('recipes:edit_recipe', args=[self.recipe_url.slug]):
+                reverse('recipes:recipe', args=[self.recipe_url.slug]),
         }
 
         self.check_redirects(
@@ -118,10 +136,12 @@ class StaticURLTests(Addition):
             reverse('recipes:favorite'): 'favorite.html',
             reverse('recipes:author_page', args=[self.user.username]):
                 'recipe/authorRecipe.html',
-            reverse('recipes:recipe', args=[self.recipe_url.id]):
+            reverse('recipes:recipe', args=[self.recipe_url.slug]):
                 'recipe/singlePage.html',
-            reverse('recipes:edit_recipe', args=[self.recipe_url.id]):
-                'recipe/formChangeRecipe.html'
+            reverse('recipes:edit_recipe', args=[self.recipe_url.slug]):
+                'recipe/formRecipe.html',
+            self.flat_about.url: 'flatpages/default.html',
+            self.flat_spec.url: 'flatpages/default.html',
         }
 
         for reverse_name, template in template_names.items():

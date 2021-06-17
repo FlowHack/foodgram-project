@@ -1,11 +1,12 @@
 {% load static %}
 {% load user_filters %}
+
 <div class="card" data-id="{{ recipe.id }}">
-    <a href="{% url 'recipes:recipe' recipe.id %}" class="link" target="_blank">
+    <a href="{% url 'recipes:recipe' recipe.slug %}" class="link" target="_blank">
       <img src="{{ MEDIA_URL }}{{ recipe.image.url }}" alt="Картинка блюда" class="card__image">
     </a>
     <div class="card__body">
-      <a class="card__title link" href="{% url 'recipes:recipe' recipe.id %}" target="_blank">{{ recipe.title }}</a>
+      <a class="card__title link" href="{% url 'recipes:recipe' recipe.slug %}">{{ recipe.title }}</a>
       <ul class="card__items">
         {% for tag in recipe.tag.all %}
           <li class="card__item"><span class="badge badge_style_{{ tag.color }}">{{ tag.title }}</span></li>

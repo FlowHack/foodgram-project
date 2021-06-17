@@ -4,10 +4,11 @@ from recipes.models import Ingredient, QuantityIngredient, Recipe, Tag
 
 
 def get_tags(get_params):
-    if 'page' in get_params:
-        del(get_params['page'])
+    tags = dict(get_params)
+    if 'page' in tags:
+        del(tags['page'])
 
-    return list(get_params.keys())
+    return list(tags.keys())
 
 
 def get_recipes_by_tags(get_params, objects):
@@ -23,7 +24,7 @@ def get_recipes_by_tags(get_params, objects):
 
 def create_quantity_ingredients(data, recipe):
     for item in data:
-        QuantityIngredient.objects.create(
+        QuantityIngredient.objects.get_or_create(
             recipe=recipe,
             ingredient=item['ingredient'],
             quantity=item['quantity']

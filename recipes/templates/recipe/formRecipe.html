@@ -13,7 +13,11 @@
 
 {% block content %}
 <div class="form-container form_container_recipe">
+  {% if recipe %}
+  <form class="form form_recipe" method="post" enctype="multipart/form-data" action="{% url 'recipes:edit_recipe' recipe_slug=recipe.slug %}">
+  {% else %}
   <form class="form form_recipe" method="post" enctype="multipart/form-data" action="{% url 'recipes:new_recipe' %}">
+  {% endif %}
     {% csrf_token %}
     <div class="form__group">
       <label for="id_title" class="form__label">Название рецепта<span class="red">*</span></label>

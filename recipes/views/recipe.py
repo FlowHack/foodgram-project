@@ -56,8 +56,8 @@ def author_page(request, username):
     return render(request, 'recipe/authorRecipe.html', context=context)
 
 
-def recipe(request, recipe_id):
-    recipe = get_object_or_404(Recipe, id=recipe_id)
+def recipe(request, recipe_slug):
+    recipe = get_object_or_404(Recipe, slug=recipe_slug)
 
     context = {
         'recipe': recipe,
@@ -110,11 +110,11 @@ def new_recipe(request):
 
 
 @login_required
-def edit_recipe(request, recipe_id):
-    recipe = get_object_or_404(Recipe, id=recipe_id)
+def edit_recipe(request, recipe_slug):
+    recipe = get_object_or_404(Recipe, slug=recipe_slug)
 
     if request.user != recipe.author:
-        return redirect('recipes:recipe', recipe_id=recipe_id)
+        return redirect('recipes:recipe', recipe_slug=recipe_slug)
 
     form = RecipeForm(
         request.POST or None,
@@ -156,13 +156,13 @@ def edit_recipe(request, recipe_id):
         except Exception:
             edit_recipe.delete()
 
-        return redirect('recipes:index')
+        return redirect('recipes:recipe', recipe_slug=recipe_slug)
 
     context = {
         'form': form, 'new_recipe': True,
         'recipe': recipe, 'tags': Tag.objects.all()
     }
-    return render(request, 'recipe/formChangeRecipe.html', context=context)
+    return render(request, 'recipe/formRecipe.html', context=context)
 
 
 @login_required
@@ -220,11 +220,11 @@ def shop_list_page(request):
 
 
 @login_required
-def delete_recipe(request, recipe_id):
-    recipe = get_object_or_404(Recipe, id=recipe_id)
+def delete_recipe(request, recipe_slug):
+    recipe = get_object_or_404(Recipe, slug=recipe_slug)
 
     if request.user != recipe.author:
-        return redirect('recipes:recipe', recipe_id=recipe_id)
+        return redirect('recipes:recipe', recipe_slug=recipe_slug)
 
     recipe.delete()
 

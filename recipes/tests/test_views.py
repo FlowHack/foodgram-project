@@ -1,3 +1,5 @@
+from django.contrib.flatpages.models import FlatPage
+from django.contrib.sites.models import Site
 from django.urls import reverse
 
 from recipes import settings as recipe_settings
@@ -8,6 +10,22 @@ from users.models import Follow
 
 
 class Addition(AllSettings):
+    def setUp(self):
+        super().setUp()
+        site = Site.objects.get(pk=1)
+        self.flat_about = FlatPage.objects.create(
+            url='/about-author/',
+            title='about',
+            content='<b>content</b>'
+        )
+        self.flat_spec = FlatPage.objects.create(
+            url='/about-spec/',
+            title='about spec',
+            content='<b>content</b>'
+        )
+        self.flat_about.sites.add(site)
+        self.flat_spec.sites.add(site)
+
     def check_context_page(self, response, check_with, expected_count):
         """Функция проверки context с page
 
@@ -121,7 +139,7 @@ class ViewsTest(Addition):
 
     def test_show_crrect_context_recipe(self):
         response = self.authorized_client_without_recipes.get(
-            reverse('recipes:recipe', args=[self.recipe_without_image.id])
+            reverse('recipes:recipe', args=[self.recipe_without_image.slug])
         )
 
         recipe = response.context['recipe']
@@ -129,3 +147,17 @@ class ViewsTest(Addition):
 
         self.assertEqual(recipe, self.recipe_without_image)
         self.assertEqual(index, True)
+
+    def test_show_correct_context_flatpages(self):
+        list_content_flatpage = {
+            'about': self.flat_about.content,
+            'terms': self.flat_spec.content
+        }
+
+        for reverse_name, contents in list_content_flatpage.items():
+            with self.subTest():
+                response = self.authorized_client.get(reverse(reverse_name))
+                self.assertEqual(
+                    response.context['flatpage'].content,
+                    contents
+                )
