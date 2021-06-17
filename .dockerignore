@@ -5,5 +5,4 @@ venv/
 nginx/
 docker-compose.yaml
 setup.cfg
-Dockerfile
 */__pycache__/
