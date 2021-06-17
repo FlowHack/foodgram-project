@@ -3,6 +3,5 @@ venv/
 .gitignore
 .git
 nginx/
-docker-compose.yaml
 setup.cfg
 */__pycache__/
