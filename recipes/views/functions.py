@@ -1,8 +1,8 @@
-from django.shortcuts import get_object_or_404
 from django.db.models import Sum
+from django.shortcuts import get_object_or_404
 
-from recipes.models import Ingredient, QuantityIngredient
 import recipes.settings as recipes_settings
+from recipes.models import Ingredient, QuantityIngredient
 
 
 def get_tags(get_params):
@@ -69,7 +69,7 @@ def ingredients_for_download(user):
         'ingredient__title', 'ingredient__dimension'
     ).annotate(sum_ingredients=Sum('quantity'))
 
-    ingredients = [
+    return [
         recipes_settings.TEMPLATE_SHOPLIST_RECORD.format(
             title=item['ingredient__title'].capitalize(),
             quantity=item['sum_ingredients'],
@@ -77,8 +77,6 @@ def ingredients_for_download(user):
         )
         for item in unprepared_ingredients
     ]
-
-    return ingredients
 
 
 def get_tags_for_edit(recipe):
