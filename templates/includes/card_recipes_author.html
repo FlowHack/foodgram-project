@@ -24,13 +24,13 @@
       {% if author.recipes.all.count > 3 %}
       <li class="card-user__item">
         <a href="{% url 'recipes:author_page' author.username %}" class="card-user__link link">
-          Еще {{ author.recipes.all.count|add:'-3' }} {{ 125|add:'-3' |pluralize:'рецепт,рецепта,рецептов' }}...
+          Еще {{ author.recipes.all.count|add:'-3' }} {{ author.recipes.all.count|add:'-3' |pluralize_recipe }}...
         </a>
       </li>
       {% endif %}
     </ul>
   </div>
   <div class="card-user__footer">
-    {% include 'buttons/follow.html' with author=author css='button_size_auto' %}
+    {% include 'buttons/follow.html' with author=author size_auto=True %}
   </div>
 </div>

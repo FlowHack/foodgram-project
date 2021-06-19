@@ -76,14 +76,11 @@ def new_recipe(request):
         recipe.author = request.user
 
         try:
-            error_object = 'ingredients'
             data_ingredients = functions.get_ingredients_and_validate(
                 data
             )
-            error_object = 'tags'
-            tags = functions.get_tags_and_validate(data)
         except ValueError as error:
-            form._errors[error_object] = ErrorList(
+            form._errors['ingredients'] = ErrorList(
                 [str(error)]
             )
             context = {
@@ -98,8 +95,6 @@ def new_recipe(request):
             functions.create_quantity_ingredients(
                 data_ingredients, recipe
             )
-            recipe.tag.set(tags)
-            recipe.save()
         except Exception:
             recipe.delete()
 
@@ -124,18 +119,15 @@ def edit_recipe(request, recipe_slug):
 
     if form.is_valid():
         data = request.POST.dict()
-        edit_recipe = form.save(commit=False)
+        edit_recipe = form.save()
         edit_recipe.author = request.user
 
         try:
-            error_object = 'ingredients'
             data_ingredients = functions.get_ingredients_and_validate(
                 data
             )
-            error_object = 'tags'
-            tags = functions.get_tags_and_validate(data)
         except ValueError as error:
-            form._errors[error_object] = ErrorList(
+            form._errors['ingredients'] = ErrorList(
                 [str(error)]
             )
             context = {
@@ -151,8 +143,6 @@ def edit_recipe(request, recipe_slug):
             functions.create_quantity_ingredients(
                 data_ingredients, edit_recipe
             )
-            edit_recipe.tag.set(tags)
-            edit_recipe.save()
         except Exception:
             edit_recipe.delete()
 

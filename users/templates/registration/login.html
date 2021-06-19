@@ -14,22 +14,7 @@
 <div class="form-container">
   <form class="form" method="post" action="{% url 'login' %}">
     {% csrf_token %}
-    <div class="form__group">
-      <label for="id_username" class="form__label">Логин</label>
-      <div class="form__field-group">
-        <input type="text" name="username" id="id_username" class="form__input">
-        <span class="form__error">{{ form.errors.username }}</span>
-      </div>
-    </div>
-    <div class="form__group">
-      <label for="id_password" class="form__label">Пароль</label>
-      <div class="form__field-group">
-        <input type="password" name="password" id="id_password" class="form__input">
-        {% if form.non_field_errors %}
-          <span class="form__error">Имя пользователя и пароль не совпадают. Введите правильные данные.</span>
-        {% endif %}
-      </div>
-    </div>
+    {% include 'includes/form.html' with form=form %}
     <div class="form__footer">
       <button class="button button_style_blue">Войти</button>
       <a class="form__forgot-link" href="{% url 'password_reset' %}">Забыли пароль?</a>

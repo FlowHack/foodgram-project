@@ -7,7 +7,7 @@
 {% endblock css %}
 
 {% block header %}
-  {% if recipes|length > 0 %}
+  {% if recipes.count > 0 %}
     <h1 class="main__title">Список покупок</h1>
   {% endif %}
 {% endblock header %}
@@ -27,7 +27,7 @@
       </li>
     {% endfor %}
   </ul>
-  {% if recipes|length > 0 %}
+  {% if recipes.count > 0 %}
     <a href="{% url 'recipes:shoplist_download' %}" target="_blank"><button class="button button_style_blue">Скачать список</button></a>
   {% else %}
     <h2 class="main_header">Тут пустовато! Добавьте в список покупок рецепты =)</h2>

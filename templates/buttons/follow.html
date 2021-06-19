@@ -1,7 +1,11 @@
 {% load user_filters %}
 
 {% if request.user|in_follower:author %}
-  <button class="button button_style_light-blue {% if css %}{{ css }}{% else %}button_size_subscribe{% endif %}" name="subscribe">Отписаться от автора</button>
+  {% if size_auto %}<button class="button button_style_light-blue button_size_auto" name="subscribe">Отписаться от автора</button>
+  {% else %}<button class="button button_style_light-blue button_size_subscribe" name="subscribe">Отписаться от автора</button>
+  {% endif %}
 {% else %}
-  <button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button>
+  {% if size_auto %}<button class="button button_style_light-blue button_size_auto" name="subscribe" data-out>Подписаться на автора</button>
+  {% else %}<button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button>
+  {% endif %}
 {% endif %}

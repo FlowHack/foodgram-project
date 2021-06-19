@@ -3,7 +3,10 @@
 
 {% block title %}Рецепты{% endblock title %}
 {% block css %}<link rel="stylesheet" href="{% static "pages/index.css" %}">{% endblock css %}
-{% block header %}{% include 'includes/checkbox_header.html' with title='Рецепты' tags=tags %}{% endblock header %}
+{% block header %}
+  <h1 class="main__title">Рецепты</h1>
+  {% include 'includes/checkbox_header.html' with tags=tags %}
+{% endblock header %}
 
 {% block content %}
 {% csrf_token %}

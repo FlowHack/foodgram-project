@@ -36,8 +36,8 @@ def ingredient_quantity(ingredient, recipe):
 
 
 @register.filter
-def pluralize(value, variants):
-    variants = variants.split(',')
+def pluralize_recipe(value):
+    variants = ['рцепт', 'рецепта', 'рецептов']
 
     if value % 100 == 2 or (value % 100 > 20 and value % 10 == 1):
         return variants[0]

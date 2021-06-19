@@ -3,7 +3,14 @@
 
 {% block title %}Рецепты{% endblock title %}
 {% block css %}<link rel="stylesheet" href="{% static "pages/index.css" %}">{% endblock css %}
-{% block header %}{% include 'includes/checkbox_header.html' with user=author tags=tags %}{% endblock header %}
+{% block header %}
+  <h1 class="main__title">
+    {% if author.first_name and author.last_name %}{{ author.first_name }} {{ author.last_name }}
+    {% else %}{{ author.username }}
+    {% endif %}
+  </h1>
+  {% include 'includes/checkbox_header.html' with tags=tags %}
+{% endblock header %}
 
 {% block content %}
 {% csrf_token %}
@@ -11,9 +18,6 @@
   <div class="author-subscribe" data-author="{{ author.id }}">
     <p style="padding: 0 0 2em 0;">
       {% include 'buttons/follow.html' with author=author %}
-      {% if request.user == author %}
-        <a style="margin-left: 1em;" class="button button_style_light-blue" href="{% url 'password_reset' %}">Изменить пароль</a>
-      {% endif %}
     </p>
   </div>
 {% endif %}

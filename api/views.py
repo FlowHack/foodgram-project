@@ -16,10 +16,10 @@ def purchases(request):
 
     if request.method == 'POST':
         recipe = get_object_or_404(Recipe, id=recipe_id)
-        result = ShoppingList.objects.get_or_create(
+        shop_list, result = ShoppingList.objects.get_or_create(
             user=request.user,
             recipe=recipe
-        )[1]
+        )
         if not result:
             raise api_settings.RESPONSE_400_EXIST
 
@@ -43,10 +43,10 @@ def favorites(request):
 
     if request.method == 'POST':
         recipe = get_object_or_404(Recipe, id=recipe_id)
-        result = Favorite.objects.get_or_create(
+        favorite, result = Favorite.objects.get_or_create(
             user=request.user,
             recipe=recipe
-        )[1]
+        )
         if not result:
             return api_settings.RESPONSE_400_EXIST
 
@@ -75,10 +75,10 @@ def follow(request):
             return api_settings.RESPONSE_400_CANT_SUBSCRIBE_YOURSELF
 
         author = get_object_or_404(User, id=author_id)
-        result = Follow.objects.get_or_create(
+        follow, result = Follow.objects.get_or_create(
             user=request.user,
             author=author
-        )[1]
+        )
         if not result:
             return api_settings.RESPONSE_400_EXIST
 

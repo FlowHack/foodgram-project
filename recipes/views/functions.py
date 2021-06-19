@@ -1,12 +1,16 @@
-from collections import defaultdict
+from django.shortcuts import get_object_or_404
+from django.db.models import Sum
 
-from recipes.models import Ingredient, QuantityIngredient, Recipe, Tag
+from recipes.models import Ingredient, QuantityIngredient
+import recipes.settings as recipes_settings
 
 
 def get_tags(get_params):
     tags = dict(get_params)
-    if 'page' in tags:
-        del(tags['page'])
+    try:
+        tags.pop('page')
+    except KeyError:
+        pass
 
     return list(tags.keys())
 
@@ -35,7 +39,7 @@ def get_ingredients_and_validate(data):
     ingredients = []
 
     for item in data.keys():
-        if 'nameIngredient_' in item:
+        if item.startswitch('nameIngredient_'):
             number = item.split('nameIngredient_')[1]
             title = data[item]
             value = data['valueIngredient_' + number]
@@ -46,12 +50,9 @@ def get_ingredients_and_validate(data):
                     f'Количество ингредиента не может быть = {value}'
                 )
 
-            try:
-                __ingredient = Ingredient.objects.get(
-                    title=title, dimension=units
-                )
-            except Ingredient.DoesNotExist:
-                raise ValueError(f'Не существует ингредиента: {title}')
+            __ingredient = get_object_or_404(
+                Ingredient, title=title, dimension=units
+            )
 
             ingredients.append({'ingredient': __ingredient, 'quantity': value})
 
@@ -61,45 +62,23 @@ def get_ingredients_and_validate(data):
     return ingredients
 
 
-def get_tags_and_validate(data):
-    all_tags = Tag.objects.all().values_list('tag')
-    tags = []
-
-    try:
-        for item in data.keys():
-            if (item, ) in all_tags:
-                tags.append(Tag.objects.get(tag=item))
-    except Tag.DoesNotExist:
-        raise ValueError('В BD нет такого тега')
-
-    if len(tags) == 0:
-        raise ValueError('Обязательное поле')
-
-    return tags
-
-
 def ingredients_for_download(user):
-    ingredients = defaultdict(lambda: ['', 0, ''])
-    unprepared_ingredients = Recipe.objects.filter(
-        shoplists__user=user
+    unprepared_ingredients = QuantityIngredient.objects.filter(
+        recipe__shoplists__user=user
     ).values(
-        'ingredients__title',
-        'ingredients__dimension',
-        'quantity_ingredients__quantity'
-    )
+        'ingredient__title', 'ingredient__dimension'
+    ).annotate(sum_ingredients=Sum('quantity'))
 
-    for ingredient in unprepared_ingredients:
-        title = ingredient['ingredients__title']
-        dimension = ingredient['ingredients__dimension']
-        quantity = ingredient['quantity_ingredients__quantity']
+    ingredients = [
+        recipes_settings.TEMPLATE_SHOPLIST_RECORD.format(
+            title=item['ingredient__title'].capitalize(),
+            quantity=item['sum_ingredients'],
+            dimension=item['ingredient__dimension']
+        )
+        for item in unprepared_ingredients
+    ]
 
-        quantity += ingredients[title][1]
-        ingredients[title] = [title, quantity, dimension]
-
-    for key, value in ingredients.items():
-        ingredients[key] = f'{value[0].capitalize()} - {value[1]}{value[2]}'
-
-    return ingredients.values()
+    return ingredients
 
 
 def get_tags_for_edit(recipe):
