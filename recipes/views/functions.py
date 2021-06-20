@@ -7,10 +7,7 @@ from recipes.models import Ingredient, QuantityIngredient
 
 def get_tags(get_params):
     tags = dict(get_params)
-    try:
-        tags.pop('page')
-    except KeyError:
-        pass
+    tags.pop('page', tags)
 
     return list(tags.keys())
 
@@ -18,7 +15,7 @@ def get_tags(get_params):
 def get_recipes_by_tags(get_params, objects):
     tags = get_tags(get_params)
 
-    if len(tags) == 0:
+    if not tags:
         return objects.all()
 
     return objects.filter(

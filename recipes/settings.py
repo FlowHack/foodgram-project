@@ -3,3 +3,4 @@ ITEM_RECIPES_FAVORITE = 6
 ITEM_RECIPES_FOLLOW = 6
 ITEM_RECIPES_AUTHOR_PAGE = 6
 TEMPLATE_SHOPLIST_RECORD = '{title} - {quantity}{dimension}'
+RECIPE_VARIANTS = ['рецепт', 'рецепта', 'рецептов']

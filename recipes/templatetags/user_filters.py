@@ -1,5 +1,6 @@
 from django import template
 from django.shortcuts import get_object_or_404
+import recipes.settings as recipes_settings
 
 register = template.Library()
 
@@ -37,18 +38,20 @@ def ingredient_quantity(ingredient, recipe):
 
 @register.filter
 def pluralize_recipe(value):
-    variants = ['рцепт', 'рецепта', 'рецептов']
+    variants = recipes_settings.RECIPE_VARIANTS
 
     if value % 100 == 2 or (value % 100 > 20 and value % 10 == 1):
-        return variants[0]
+        result = variants[0]
 
-    if value % 100 == 2 or (value % 100 > 20 and value % 10 == 2):
-        return variants[1]
+    elif value % 100 == 2 or (value % 100 > 20 and value % 10 == 2):
+        result = variants[1]
 
-    if value % 100 == 3 or (value % 100 > 20 and value % 10 == 3):
-        return variants[1]
+    elif value % 100 == 3 or (value % 100 > 20 and value % 10 == 3):
+        result = variants[1]
 
-    if value % 100 == 4 or (value % 100 > 20 and value % 10 == 4):
-        return variants[1]
+    elif value % 100 == 4 or (value % 100 > 20 and value % 10 == 4):
+        result = variants[1]
+    else:
+        result = variants[2]
 
-    return variants[2]
+    return result
