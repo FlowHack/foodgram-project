@@ -1,5 +1,6 @@
 from django import template
 from django.shortcuts import get_object_or_404
+
 import recipes.settings as recipes_settings
 
 register = template.Library()
@@ -41,17 +42,12 @@ def pluralize_recipe(value):
     variants = recipes_settings.RECIPE_VARIANTS
 
     if value % 100 == 2 or (value % 100 > 20 and value % 10 == 1):
-        result = variants[0]
-
+        return variants[0]
     elif value % 100 == 2 or (value % 100 > 20 and value % 10 == 2):
-        result = variants[1]
-
+        return variants[1]
     elif value % 100 == 3 or (value % 100 > 20 and value % 10 == 3):
-        result = variants[1]
-
+        return variants[1]
     elif value % 100 == 4 or (value % 100 > 20 and value % 10 == 4):
-        result = variants[1]
-    else:
-        result = variants[2]
+        return variants[1]
 
-    return result
+    return variants[2]
