@@ -27,7 +27,7 @@ jobs:
   
   exit_message:
     runs-on: ubuntu-latest
-    needs: deploy
+    needs: tests
     steps:
     - name: send message
       uses: appleboy/telegram-action@master
