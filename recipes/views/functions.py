@@ -7,7 +7,7 @@ from recipes.models import Ingredient, QuantityIngredient
 
 def get_tags(get_params):
     tags = dict(get_params)
-    tags.pop('page', tags)
+    tags.pop('page', None)
 
     return list(tags.keys())
 
@@ -36,7 +36,7 @@ def get_ingredients_and_validate(data):
     ingredients = []
 
     for item in data.keys():
-        if item.startswitch('nameIngredient_'):
+        if item.startswith('nameIngredient_'):
             number = item.split('nameIngredient_')[1]
             title = data[item]
             value = data['valueIngredient_' + number]

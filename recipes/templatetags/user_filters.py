@@ -43,11 +43,15 @@ def pluralize_recipe(value):
 
     if value % 100 == 2 or (value % 100 > 20 and value % 10 == 1):
         return variants[0]
+    elif value % 10 == 1:
+        return variants[0]
     elif value % 100 == 2 or (value % 100 > 20 and value % 10 == 2):
         return variants[1]
     elif value % 100 == 3 or (value % 100 > 20 and value % 10 == 3):
         return variants[1]
     elif value % 100 == 4 or (value % 100 > 20 and value % 10 == 4):
         return variants[1]
+    elif 1 < value % 10 < 5:
+        return variants[0]
 
     return variants[2]
