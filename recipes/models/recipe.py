@@ -1,6 +1,6 @@
 from autoslug import AutoSlugField
-from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth import get_user_model
+from django.core.validators import MinValueValidator
 from django.db import models
 
 from .ingredient import Ingredient
@@ -22,7 +22,7 @@ class Recipe(models.Model):
         help_text='Введите название рецепта',
         max_length=50, blank=False, null=False
     )
-    description = RichTextUploadingField(
+    description = models.TextField(
         verbose_name='Описание рецепта',
         help_text='Введите описание рецепта',
         blank=False, null=False
@@ -48,15 +48,15 @@ class Recipe(models.Model):
     cooking_time = models.PositiveIntegerField(
         verbose_name='Время приготовления',
         help_text='Введите время приготовления в минутах',
+        validators=[MinValueValidator(1)],
         null=False, blank=False
     )
     image = models.ImageField(
         verbose_name='Картинка рецепта',
         help_text='Вы можете прикрепить к своему рецепту картинку',
         upload_to='recipes/',
-        default='testCardImg.png',
-        blank=True,
-        null=True
+        blank=False,
+        null=False
     )
     pub_date = models.DateTimeField('Дата публикации', auto_now_add=True)
 

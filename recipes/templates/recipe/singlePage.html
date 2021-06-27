@@ -3,8 +3,7 @@
 {% load static %}
 
 {% block title %}{{ recipe.title }}{% endblock title %}
-{% block css %}
-<link rel="stylesheet" href="{% static "pages/single.css" %}">{% endblock css %}
+{% block css %}<link rel="stylesheet" href="{% static "pages/single.css" %}">{% endblock css %}
 
 {% block content %}
 {% csrf_token %}
@@ -13,7 +12,7 @@
   {% else %}
   <div class="single-card" data-id="{{ recipe.id }}">
     {% endif %}
-    <img src="{{ MEDIA_URL }}{{ recipe.image.url }}" alt="какой-то текст" class="single-card__image" style="width: 510px; height: 360px">
+    <img src="{{ MEDIA_URL }}{{ recipe.image.url }}" alt="какой-то текст" class="single-card__image">
     <div class="single-card__info">
       <div class="single-card__header-info">
         <h1 class="single-card__title">{{ recipe.title }}</h1>
@@ -29,7 +28,7 @@
         {% endfor %}
       </ul>
       <div class="single-card__items single-card__items_column">
-        <p class="single-card__text"><span class="icon-time"></span>{{ recipe.cooking_time }}</p>
+        <p class="single-card__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мин.</p>
         <ul class="single-card__items">
           <li class="single-card__item">
             <a href="{% url 'recipes:author_page' username=recipe.author.username %}" class="single-card__text link">
@@ -49,7 +48,9 @@
       <ul class="single-card__items">
         {% if user.is_authenticated %}
           <li class="single-card__item">{% include 'buttons/shoplist.html' with recipe=recipe %}</li>
-          <li class="single-card__item">{% include 'buttons/follow.html' with author=recipe.author %}</li>
+          {% if request.user != recipe.author %}
+            <li class="single-card__item">{% include 'buttons/follow.html' with author=recipe.author %}</li>
+          {% endif %}
         {% endif %}
       </ul>
       <div class="single-card__section">
@@ -62,12 +63,13 @@
           {% endfor %}
         </div>
       </div>
+      <div class="single-card__section">
+        <h3 class="single-card__section-title">Описание:</h3>
+        <p class=" single-card__section-text">
+          {{ recipe.description|safe }}
+        </p>
+      </div>
     </div>
-  </div>
-  <div class="single-card__section recipe_description">
-    <p class=" single-card__section-text">
-      {{ recipe.description|safe }}
-    </p>
   </div>
   {% endblock content %}
 

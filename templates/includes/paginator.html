@@ -1,3 +1,4 @@
+{% if paginator.count > 0 %}
 <nav class="pagination" aria-label="Search results pages">
   <ul class="pagination__container">
     <li class="pagination__item">
@@ -31,3 +32,4 @@
     window.location.href = url.href;
   }
 </script>
+{% endif %}

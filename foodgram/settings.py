@@ -25,8 +25,6 @@ INSTALLED_APPS = [
     'api',
     'users',
     'recipes',
-    'ckeditor_uploader',
-    'ckeditor',
     'rest_framework',
     'corsheaders',
     'django.contrib.sites',
@@ -114,11 +112,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-#  CKEDITOR
-CKEDITOR_UPLOAD_PATH = 'uploads/'
-CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/'
 
 CKEDITOR_CONFIGS = {
     'default': {

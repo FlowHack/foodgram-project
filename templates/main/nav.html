@@ -20,13 +20,13 @@
         <a href="{% url 'recipes:author_page' username=request.user.username %}" class="nav__link link">@{{ request.user.username }}</a>
       </li>
       <li class="nav__item">
-        <a class="nav__link link" href="{% url 'password_reset' %}">Изменить пароль</a>
+        <a class="nav__link link" href="{% url 'password_change' %}">Изменить пароль</a>
       </li>
       <li class="nav__item"><a href="{% url 'logout' %}" class="nav__link link">Выход</a></li>
     </ul>
     {% else %}
     <ul class="nav__items list">
-      <li class="nav__item nav__item_disabled"><a href="{% url 'recipes:index' %}" class="nav__link link">Рецепты</a></li>
+      <li class="nav__item nav__item_active"><a href="{% url 'recipes:index' %}" class="nav__link link">Рецепты</a></li>
     </ul>
     <ul class="nav__items list">
       <li class="nav__item"><a href="{% url 'login' %}" class="nav__link link">Войти</a></li>

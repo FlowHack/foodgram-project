@@ -13,14 +13,14 @@
         {% endfor %}
       </ul>
       <div class="card__items card__items_column">
-        <p class="card__text"><span class="icon-time"></span> {{ recipe.cooking_time }}мин.</p>
+        <p class="card__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мин.</p>
         <p class="card__text"><span class="icon-user"></span>
-          <a href="{% url 'recipes:author_page' recipe.author.username %}" style="color: blue; text-decoration: none;"><i> #{{ recipe.author.username }}</i></a>
+          <a class="black_link" href="{% url 'recipes:author_page' recipe.author.username %}">{{ recipe.author.username }}</a>
         </p>
       </div>
     </div>
     <div class="card__footer">
-      {% if request.user.is_authenticated and recipe.author != request.user %}
+      {% if request.user.is_authenticated %}
         {% include 'buttons/shoplist.html' with recipe=recipe %}
         {% include 'buttons/favorite.html' with recipe=recipe %}
       {% endif %}

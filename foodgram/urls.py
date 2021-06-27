@@ -10,7 +10,6 @@ handler500 = 'recipes.views.server_error'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('django.contrib.auth.urls')),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('about-author/', flatpage, {'url': '/about-author/'}, name='about'),
     path('about-spec/', flatpage, {'url': '/about-spec/'}, name='terms'),
     path('api/', include('api.urls')),

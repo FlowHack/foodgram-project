@@ -15,5 +15,12 @@ class Ingredient(models.Model):
         null=False, blank=False
     )
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['dimension', 'title'], name='unique dimension'
+            )
+        ]
+
     def __str__(self):
         return f'{self.title} {self.dimension}'

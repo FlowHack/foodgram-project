@@ -16,17 +16,17 @@
 {% endblock header %}
 
 {% block content %}
-<div class="form-container form_container_recipe">
+<div class="form-container">
   {% if recipe %}
-  <form class="form form_recipe" method="post" enctype="multipart/form-data" action="{% url 'recipes:edit_recipe' recipe_slug=recipe.slug %}">
+  <form class="form" method="post" enctype="multipart/form-data" action="{% url 'recipes:edit_recipe' recipe_slug=recipe.slug %}">
   {% else %}
-  <form class="form form_recipe" method="post" enctype="multipart/form-data" action="{% url 'recipes:new_recipe' %}">
+  <form class="form" method="post" enctype="multipart/form-data" action="{% url 'recipes:new_recipe' %}">
   {% endif %}
     {% csrf_token %}
     <div class="form__group">
       <label for="id_title" class="form__label">Название рецепта<span class="red">*</span></label>
       <div class="form__field-group form_field_group_new">
-        {{ form.title|addclass:"form__input&max-width: 500px;" }}
+        {{ form.title|addclass:"form__input" }}
         <span class="form__error">{{ form.title.errors }}</span>
       </div>
     </div>
@@ -53,10 +53,10 @@
       <div class="form__field-group form_field_group_new">
         <div class="form__field-group-ingredientes">
           <div class="form__dropdown">
-            <input type="text" id="nameIngredient" class="form__input" style="max-width: 100%">
+            <input type="text" id="nameIngredient" class="form__input">
             <div class="form__dropdown-items">{{ form.errors.ingredients }}</div>
           </div>
-          <input type="number" id="cantidad" class="form__input" min="0">
+          <input type="number" id="cantidad" class="form__input" min="1">
           <label for="cantidad" class="form__label" id="cantidadVal">шт.</label>
         </div>
         <div class="form__field-group-ingredientes-container">
@@ -87,13 +87,12 @@
     <div class="form__group">
       <label for="id_description" class="form__label">Описание<span class="red">*</span></label>
       <div class="form__field-group form_field_group_new">
-        {{ form.media }}
-        {{ form.description }}
+        {{ form.description|addclass:"form__textarea" }}
         <span class="form__error">{{ form.description.errors }}</span>
       </div>
     </div>
     <div class="form__group">
-      <span class="form__label" for="id_image">Загрузить фото</span>
+      <span class="form__label" for="id_image">Загрузить фото<span class="red">*</span></span>
       <div class="form__field-group form_field_group_new">
         {{ form.image|addclass:"form__file-button" }}
         <span class="form__error">{{ form.image.errors }}</span>
