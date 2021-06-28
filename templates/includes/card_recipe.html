@@ -15,7 +15,10 @@
       <div class="card__items card__items_column">
         <p class="card__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мин.</p>
         <p class="card__text"><span class="icon-user"></span>
-          <a class="black_link" href="{% url 'recipes:author_page' recipe.author.username %}">{{ recipe.author.username }}</a>
+          <a class="black_link" href="{% url 'recipes:author_page' recipe.author.username %}">
+            {% if recipe.author.first_name and recipe.author.last_name %}{{ recipe.author.first_name }} {{ recipe.author.last_name }}
+            {% else %}{{ recipe.author.username }}{% endif %}
+          </a>
         </p>
       </div>
     </div>

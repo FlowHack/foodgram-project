@@ -26,7 +26,9 @@
     {% include 'includes/card_recipe.html' with recipe=recipe %}
   {% endfor %}
 </div>
-{% include 'includes/paginator.html' with items=page paginator=paginator %}
+{% if paginator.count > 6 %}
+  {% include 'includes/paginator.html' with items=page paginator=paginator %}
+{% endif %}
 {% endblock content %}
 
 {% block js %}

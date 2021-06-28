@@ -33,11 +33,8 @@
           <li class="single-card__item">
             <a href="{% url 'recipes:author_page' username=recipe.author.username %}" class="single-card__text link">
               <span class="icon-user"></span>
-              {% if recipe.author.first_name and recipe.author.last_name %}
-                {{ recipe.author.first_name }} {{ recipe.author.last_name }}
-              {% else %}
-                {{ recipe.author.username }}
-              {% endif %}
+              {% if recipe.author.first_name and recipe.author.last_name %}{{ recipe.author.first_name }} {{ recipe.author.last_name }}
+              {% else %}{{ recipe.author.username }}{% endif %}
             </a>
           </li>
           {% if request.user == recipe.author %}

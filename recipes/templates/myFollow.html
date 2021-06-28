@@ -7,7 +7,7 @@
 {% endblock css %}
 
 {% block header %}
-  <h1 class="main__title main_header">Мои подписки</h1>
+  <h1 class="main__title">Мои подписки</h1>
 {% endblock header %}
 
 {% block content %}
@@ -17,7 +17,9 @@
     {% include 'includes/card_recipes_author.html' with author=following.author %}
   {% endfor %}
 </div>
-{% include 'includes/paginator.html' with items=page paginator=paginator %}
+{% if paginator.count > 6 %}
+  {% include 'includes/paginator.html' with items=page paginator=paginator %}
+{% endif %}
 {% endblock content %}
 
 {% block js %}
