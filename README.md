@@ -1,10 +1,5 @@
 # Foodgram
 
-Сайт: 
-- https://www.foodgram-prod.tk
-- https://foodgram-prod.tk
-- https://84.252.140.69/
-
 ![example workflow](https://github.com/FlowHack/foodgram-project/actions/workflows/foodgram.yml/badge.svg)
 
 ### Описание
